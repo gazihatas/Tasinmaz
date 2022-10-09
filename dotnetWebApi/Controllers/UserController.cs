@@ -1,4 +1,5 @@
 using dotnetWebApi.Data.Entities;
+using dotnetWebApi.Model.DTO;
 using dotnetWebApi.Models.BindingModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -55,6 +56,24 @@ namespace dotnetWebApi.Controllers
             }
            
         }
+
+        [HttpGet("GetAllUser")]
+        public async Task<object> GetAllUser()
+        {
+            try
+            {
+                var users = _userManager.Users.Select(x => new UserDTO(x.FullName,x.Email,x.UserName,x.DateCreated));
+                return await Task.FromResult(users);
+
+            }
+            catch (Exception ex)
+            {
+                
+                return await Task.FromResult(ex.Message);
+            }
+        }
+
+
 
     }
 }
