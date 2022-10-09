@@ -73,6 +73,28 @@ namespace dotnetWebApi.Controllers
             }
         }
 
+        [HttpPost("Login")]
+        public async Task<object> Login([FromBody] loginBindingModel model)
+        {
+            try
+            {
+                if(ModelState.IsValid)
+                {
+                    var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false,false);
+                    if(result.Succeeded)
+                    {
+                        return await Task.FromResult("Giriş başarılı");
+                    }
+                }
+
+                return await Task.FromResult("mail adresi veya şifre geçersiz.");
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(ex.Message);
+            }
+        }
+
 
 
     }
