@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <div class="card">
+
+        <div class="card-body">
+          <h5 class="card-title text-center">Login</h5>
+
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Email</label>
+              <input type="email" formControlName="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" formControlName="password" class="form-control" id="password" aria-describedby="emailHelp">
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

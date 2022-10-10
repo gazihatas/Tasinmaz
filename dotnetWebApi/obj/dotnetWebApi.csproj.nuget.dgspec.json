@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\dotnetClaim\\dotnetWebApi\\dotnetWebApi.csproj": {}
+    "c:\\dotnetClaim\\dotnetWebApi\\dotnetWebApi.csproj": {}
   },
   "projects": {
-    "C:\\dotnetClaim\\dotnetWebApi\\dotnetWebApi.csproj": {
+    "c:\\dotnetClaim\\dotnetWebApi\\dotnetWebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\dotnetClaim\\dotnetWebApi\\dotnetWebApi.csproj",
+        "projectUniqueName": "c:\\dotnetClaim\\dotnetWebApi\\dotnetWebApi.csproj",
         "projectName": "dotnetWebApi",
-        "projectPath": "C:\\dotnetClaim\\dotnetWebApi\\dotnetWebApi.csproj",
+        "projectPath": "c:\\dotnetClaim\\dotnetWebApi\\dotnetWebApi.csproj",
         "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "C:\\dotnetClaim\\dotnetWebApi\\obj\\",
+        "outputPath": "c:\\dotnetClaim\\dotnetWebApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
