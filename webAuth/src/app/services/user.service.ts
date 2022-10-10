@@ -1,5 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { pipe } from 'rxjs';
+import { ResponseModel } from '../Models/responseModel';
+import {map} from 'rxjs/operators';
+import { User } from '../Models/user';
+import { ResponseCode } from '../enums/responseCode';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +20,7 @@ export class UserService {
       Password:password
     }
 
-    return this.httpClient.post(this.baseURL + "Login", body);
+    return this.httpClient.post<ResponseModel>(this.baseURL + "Login", body);
   }
 
 
@@ -27,6 +32,30 @@ export class UserService {
       Password:password
     }
 
-    return this.httpClient.post(this.baseURL + "RegisterUser", body);
+    return this.httpClient.post<ResponseModel>(this.baseURL + "RegisterUser", body);
   }
+
+  public getAllUser()
+  {
+
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const headers= new HttpHeaders({
+      'Authorization':`Bearer ${userInfo?.token}`
+    });
+
+    return this.httpClient.get<ResponseModel>(this.baseURL + "GetAllUser",{headers:headers}).pipe(map(res=>{
+      let userList = new Array<User>();
+      if(res.responseCode==ResponseCode.OK)
+      {
+        if(res.dateSet)
+        {
+          res.dateSet.map((x:User)=>{
+            userList.push(new User(x.fullName, x.email, x.userName));
+          })
+        }
+      }
+      return userList;
+    }));
+  }
+
 }
