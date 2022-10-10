@@ -24,6 +24,8 @@ namespace dotnetWebApi
 {
     public class Startup
     {
+        //1 Cors
+        private readonly string _loginOrigin="_localorigin";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -60,6 +62,15 @@ namespace dotnetWebApi
                     ValidAudience=audience,
                 };
             });
+
+            //2 CORS
+              services.AddCors(opt =>{
+                opt.AddPolicy(_loginOrigin, builder =>{
+                    builder.AllowAnyOrigin();
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+                });
+            });
             
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -79,6 +90,9 @@ namespace dotnetWebApi
             }
 
             app.UseHttpsRedirection();
+
+            //3 CORS
+            app.UseCors(_loginOrigin);
 
             app.UseRouting();
             //jwt4

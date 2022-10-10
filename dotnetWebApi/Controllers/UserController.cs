@@ -1,5 +1,7 @@
 using dotnetWebApi.Data.Entities;
+using dotnetWebApi.Enums;
 using dotnetWebApi.Model.DTO;
+using dotnetWebApi.Models;
 using dotnetWebApi.Models.BindingModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -58,16 +60,18 @@ namespace dotnetWebApi.Controllers
                 var result = await _userManager.CreateAsync(user,model.Password);
                 if(result.Succeeded)
                 {
-                    return await Task.FromResult("Kullanıcı zaten kayıtlı.");
+                     //return await Task.FromResult("Kullanıcı zaten kayıtlı.");
+                    return await Task.FromResult(new ResponseModel(ResponseCode.OK,"Kullanıcı zaten kayıtlı.",null));
                 }
 
-                return await Task.FromResult(string.Join(",",result.Errors.Select(x => x.Description).ToArray()));
-
+                //return await Task.FromResult(string.Join(",",result.Errors.Select(x => x.Description).ToArray()));
+                return await Task.FromResult(new ResponseModel(ResponseCode.Error,"",result.Errors.Select(x => x.Description).ToArray()));
             }
             catch (Exception ex)
             {
                 
-                return await Task.FromResult(ex.Message);
+                //return await Task.FromResult(ex.Message);
+                return await Task.FromResult(new ResponseModel(ResponseCode.Error, ex.Message,null));
             }
            
         }
@@ -85,7 +89,7 @@ namespace dotnetWebApi.Controllers
             catch (Exception ex)
             {
                 
-                return await Task.FromResult(ex.Message);
+                return await Task.FromResult(new ResponseModel(ResponseCode.Error, ex.Message,null));
             }
         }
 
@@ -102,16 +106,18 @@ namespace dotnetWebApi.Controllers
                         var appUser = await _userManager.FindByEmailAsync(model.Email);
                         var user = new UserDTO(appUser.FullName, appUser.Email, appUser.UserName, appUser.DateCreated);
                         user.Token= GenerateToken(appUser);
-                        return await Task.FromResult(user);
+                        //return await Task.FromResult(user);
+                        return await Task.FromResult(new ResponseModel(ResponseCode.OK, "",user));
 
                     }
                 }
 
-                return await Task.FromResult("mail adresi veya şifre geçersiz.");
+                
+                return await Task.FromResult(new ResponseModel(ResponseCode.Error, "mail adresi veya şifre geçersiz.",null));
             }
             catch (Exception ex)
             {
-                return await Task.FromResult(ex.Message);
+               return await Task.FromResult(new ResponseModel(ResponseCode.Error, ex.Message,null));
             }
         }
 
