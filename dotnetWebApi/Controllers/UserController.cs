@@ -1,11 +1,19 @@
 using dotnetWebApi.Data.Entities;
 using dotnetWebApi.Model.DTO;
 using dotnetWebApi.Models.BindingModel;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Models;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace dotnetWebApi.Controllers
@@ -17,13 +25,20 @@ namespace dotnetWebApi.Controllers
         private readonly ILogger<UserController> _logger;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly JWTConfig _jWTConfig;
 
 
-        public UserController(ILogger<UserController> logger, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public UserController(
+            ILogger<UserController> logger,
+            UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager,
+            IOptions<JWTConfig> jwtConfig
+            )
         {
             _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
+            _jWTConfig = jwtConfig.Value;
         }
     
         [HttpPost("RegisterUser")]
@@ -57,6 +72,7 @@ namespace dotnetWebApi.Controllers
            
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("GetAllUser")]
         public async Task<object> GetAllUser()
         {
@@ -83,7 +99,11 @@ namespace dotnetWebApi.Controllers
                     var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false,false);
                     if(result.Succeeded)
                     {
-                        return await Task.FromResult("Giriş başarılı");
+                        var appUser = await _userManager.FindByEmailAsync(model.Email);
+                        var user = new UserDTO(appUser.FullName, appUser.Email, appUser.UserName, appUser.DateCreated);
+                        user.Token= GenerateToken(appUser);
+                        return await Task.FromResult(user);
+
                     }
                 }
 
@@ -93,6 +113,29 @@ namespace dotnetWebApi.Controllers
             {
                 return await Task.FromResult(ex.Message);
             }
+        }
+
+
+        private string GenerateToken(AppUser user)
+        {
+            var jwtTokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_jWTConfig.Key);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new System.Security.Claims.ClaimsIdentity(new []{
+                    new System.Security.Claims.Claim(JwtRegisteredClaimNames.NameId,user.Id),
+                    new System.Security.Claims.Claim(JwtRegisteredClaimNames.Email,user.Email),
+                    new System.Security.Claims.Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
+
+                }),
+                Expires = DateTime.UtcNow.AddHours(12),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                Audience=_jWTConfig.Audience,
+                Issuer = _jWTConfig.Issuer
+            };
+
+            var token=jwtTokenHandler.CreateToken(tokenDescriptor);
+            return jwtTokenHandler.WriteToken(token);
         }
 
 
