@@ -178,7 +178,7 @@ namespace dotnetWebApi.Controllers
             }
         }
 
-        [Authorize(Roles="Admin")]
+        //[Authorize(Roles="Admin")]
         [HttpGet("GetRoles")]
         public async Task<object> GetRoles()
         {

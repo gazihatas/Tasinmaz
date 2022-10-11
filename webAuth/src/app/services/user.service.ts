@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import { User } from '../Models/user';
 import { ResponseCode } from '../enums/responseCode';
 import { Constants } from '../Helper/constants';
+import { Role } from '../Models/role';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +57,29 @@ export class UserService {
         }
       }
       return userList;
+    }));
+  }
+
+  public getAllRole()
+  {
+
+    let userInfo = JSON.parse(localStorage.getItem(Constants.USER_KEY));
+    const headers= new HttpHeaders({
+      'Authorization':`Bearer ${userInfo?.token}`
+    });
+
+    return this.httpClient.get<ResponseModel>(this.baseURL + "GetRoles",{headers:headers}).pipe(map(res=>{
+      let roleList = new Array<Role>();
+      if(res.responseCode==ResponseCode.OK)
+      {
+        if(res.dateSet)
+        {
+          res.dateSet.map((x:string)=>{
+            roleList.push(new Role(x));
+          })
+        }
+      }
+      return roleList;
     }));
   }
 
