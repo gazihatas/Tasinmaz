@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Models;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
@@ -51,6 +52,11 @@ namespace dotnetWebApi.Controllers
         {
             try
             {
+                if(!await _roleManager.RoleExistsAsync(model.Role))
+                {
+                    return await Task.FromResult(new ResponseModel(ResponseCode.Error, "Role does not exist",null));
+                }
+
                  var user = new AppUser()
                 {
                     FullName=model.FullName,
@@ -63,6 +69,9 @@ namespace dotnetWebApi.Controllers
                 var result = await _userManager.CreateAsync(user,model.Password);
                 if(result.Succeeded)
                 {
+                    var tempUser = await _userManager.FindByEmailAsync(model.Email);
+                    await _userManager.AddToRoleAsync(tempUser,model.Role);
+
                      //return await Task.FromResult("Kullanıcı zaten kayıtlı.");
                     return await Task.FromResult(new ResponseModel(ResponseCode.OK,"Kullanıcı zaten kayıtlı.",null));
                 }
@@ -86,8 +95,19 @@ namespace dotnetWebApi.Controllers
         {
             try
             {
-                var users = _userManager.Users.Select(x => new UserDTO(x.FullName,x.Email,x.UserName,x.DateCreated));
-                return await Task.FromResult(new ResponseModel(ResponseCode.OK,"",users));
+                //Rolleme olmadan önce kullanıcıları listeleme
+                //var users = _userManager.Users.Select(x => new UserDTO(x.FullName,x.Email,x.UserName,x.DateCreated));
+
+                List<UserDTO> allUserDTO = new List<UserDTO>();
+                var users = _userManager.Users.ToList();
+                foreach (var user in users)
+                {
+                    var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+        
+                    allUserDTO.Add(new UserDTO(user.FullName, user.Email, user.UserName, user.DateCreated, role));   
+                }            
+
+                return await Task.FromResult(new ResponseModel(ResponseCode.OK,"",allUserDTO));
 
             }
             catch (Exception ex)
@@ -108,7 +128,9 @@ namespace dotnetWebApi.Controllers
                     if(result.Succeeded)
                     {
                         var appUser = await _userManager.FindByEmailAsync(model.Email);
-                        var user = new UserDTO(appUser.FullName, appUser.Email, appUser.UserName, appUser.DateCreated);
+                        var role = (await _userManager.GetRolesAsync(appUser)).FirstOrDefault();
+
+                        var user = new UserDTO(appUser.FullName, appUser.Email, appUser.UserName, appUser.DateCreated,role);
                         user.Token= GenerateToken(appUser);
                         //return await Task.FromResult(user);
                         return await Task.FromResult(new ResponseModel(ResponseCode.OK, "",user));
@@ -166,6 +188,9 @@ namespace dotnetWebApi.Controllers
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new System.Security.Claims.ClaimsIdentity(new []{
+                    //new System.Security.Claims.Claim(JwtRegisteredClaimNames.NameId,user.Id),
+                    //otomatik olarak artan int UserId 
+                    //new System.Security.Claims.Claim(JwtRegisteredClaimNames.NameId,user.UserId.ToString()),
                     new System.Security.Claims.Claim(JwtRegisteredClaimNames.NameId,user.Id),
                     new System.Security.Claims.Claim(JwtRegisteredClaimNames.Email,user.Email),
                     new System.Security.Claims.Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
