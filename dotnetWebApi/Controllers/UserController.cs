@@ -27,6 +27,7 @@ namespace dotnetWebApi.Controllers
         private readonly ILogger<UserController> _logger;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly JWTConfig _jWTConfig;
 
 
@@ -34,13 +35,15 @@ namespace dotnetWebApi.Controllers
             ILogger<UserController> logger,
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
-            IOptions<JWTConfig> jwtConfig
+            IOptions<JWTConfig> jwtConfig,
+            RoleManager<IdentityRole> roleManager
             )
         {
             _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
             _jWTConfig = jwtConfig.Value;
+            _roleManager = roleManager;
         }
     
         [HttpPost("RegisterUser")]
@@ -76,7 +79,8 @@ namespace dotnetWebApi.Controllers
            
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize()]
         [HttpGet("GetAllUser")]
         public async Task<object> GetAllUser()
         {
@@ -119,6 +123,39 @@ namespace dotnetWebApi.Controllers
             {
                return await Task.FromResult(new ResponseModel(ResponseCode.Error, ex.Message,null));
             }
+        }
+
+        [Authorize()]
+        [HttpPost("AddRole")]
+        public async Task<object> AddRole([FromBody] AddRoleBindingModel model)
+        {
+            try
+            {
+                if(model == null || model.Role =="")
+                {
+                    return await Task.FromResult(new ResponseModel(ResponseCode.Error, "Parametre girmeniz bekleniyor",null));
+                }
+
+                if(await _roleManager.RoleExistsAsync(model.Role))
+                {
+                     return await Task.FromResult(new ResponseModel(ResponseCode.OK, "Rol zaten var.",null));
+                }
+
+                var role = new IdentityRole();
+                role.Name = model.Role;
+                var result = await _roleManager.CreateAsync(role);
+                if(result.Succeeded)
+                {
+                    return await Task.FromResult(new ResponseModel(ResponseCode.OK, "Rol başarıyla eklendi.",null));
+                }
+
+                return Task.FromResult(new ResponseModel(ResponseCode.Error, "Birşeyler ters gitti, lütfen daha sonra tekrar deneyiniz.",null));
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(new ResponseModel(ResponseCode.Error, ex.Message,null));
+            }
+            
         }
 
 

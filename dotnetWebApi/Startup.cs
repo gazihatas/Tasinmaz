@@ -47,7 +47,10 @@ namespace dotnetWebApi
             services.AddIdentity<AppUser, IdentityRole>(opt=>{}).AddEntityFrameworkStores<AppDBContext>();
 
             //jWT1
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options=>{
+            services.AddAuthentication(x=>{
+                x.DefaultAuthenticateScheme=JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme=JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options=>{
                 var key = Encoding.ASCII.GetBytes(Configuration["JWTConfig:Key"]);
                 var issuer=Configuration["JWTConfig:Issuer"];
                 var audience=Configuration["JWTConfig:Audience"];
