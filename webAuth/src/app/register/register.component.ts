@@ -10,7 +10,7 @@ import { UserService } from '../services/user.service';
 })
 export class RegisterComponent implements OnInit {
 
-  public roles:Role[] = [];
+  public roles:Role[]= [];
 
   public registerForm=this.formBuilder.group({
     fullName:['',[Validators.required]],
@@ -27,14 +27,18 @@ export class RegisterComponent implements OnInit {
   onSubmit()
   {
     console.log("on submit",this.roles);
-    return;
 
     //formdan gelen değişkenler
     let fullName = this.registerForm.controls['fullName'].value;
     let email = this.registerForm.controls['email'].value;
     let password = this.registerForm.controls['password'].value;
     //userService mize değişkenlerimizi yolluyoruz.
-    this.userService.register(fullName, email, password).subscribe((data)=>{
+    this.userService.register(fullName, email, password,this.roles.filter(x=>x.isSelected)[0].role).subscribe((data)=>{
+      this.registerForm.controls['fullName'].setValue("");
+      this.registerForm.controls['email'].setValue("");
+      this.registerForm.controls['password'].setValue("");
+      this.roles.forEach(x=>x.isSelected=false);
+
       console.log("response",data);
     },error=>{
       console.log("error",error);

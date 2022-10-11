@@ -26,12 +26,13 @@ export class UserService {
   }
 
 
-  public register(fullname:string,email:string, password:string)
+  public register(fullname:string,email:string, password:string,role:string)
   {
     const body = {
       FullName:fullname,
       Email:email,
-      Password:password
+      Password:password,
+      Role:role
     }
 
     return this.httpClient.post<ResponseModel>(this.baseURL + "RegisterUser", body);
@@ -52,7 +53,7 @@ export class UserService {
         if(res.dateSet)
         {
           res.dateSet.map((x:User)=>{
-            userList.push(new User(x.fullName, x.email, x.userName));
+            userList.push(new User(x.fullName, x.email, x.userName, x.role));
           })
         }
       }
