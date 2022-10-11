@@ -24,7 +24,7 @@
               <label for="" class="col-sm-2 col-form-label">Role</label>
               <div class="col-sm-2">
                 <div class="form-check" *ngFor="let role of roles;let index=index">
-                  <input class="form-check-input" type="radio" name="role" [checked]="role.isSelected" id="{{index}}">
+                  <input class="form-check-input" type="radio" name="role" [checked]="role.isSelected" (change)="onRoleChange(role.role)" id="{{index}}">
                   <label class="form-check-label" for="{{index}}">
                     {{role.role}}
                   </label>

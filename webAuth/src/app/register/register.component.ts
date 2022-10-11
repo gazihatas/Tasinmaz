@@ -26,7 +26,9 @@ export class RegisterComponent implements OnInit {
 
   onSubmit()
   {
-    console.log("on submit");
+    console.log("on submit",this.roles);
+    return;
+
     //formdan gelen değişkenler
     let fullName = this.registerForm.controls['fullName'].value;
     let email = this.registerForm.controls['email'].value;
@@ -44,6 +46,18 @@ export class RegisterComponent implements OnInit {
     this.userService.getAllRole().subscribe(roles=>{
       this.roles=roles;
     });
+  }
+
+  onRoleChange(role:string)
+  {
+    this.roles.forEach(x=>{
+      if(x.role == role)
+      {
+        x.isSelected=true;
+      }else{
+        x.isSelected=false;
+      }
+    })
   }
 
 }
