@@ -61,6 +61,29 @@ export class UserService {
     }));
   }
 
+  public getUserList()
+  {
+
+    let userInfo = JSON.parse(localStorage.getItem(Constants.USER_KEY));
+    const headers= new HttpHeaders({
+      'Authorization':`Bearer ${userInfo?.token}`
+    });
+
+    return this.httpClient.get<ResponseModel>(this.baseURL + "GetUserList",{headers:headers}).pipe(map(res=>{
+      let userList = new Array<User>();
+      if(res.responseCode==ResponseCode.OK)
+      {
+        if(res.dateSet)
+        {
+          res.dateSet.map((x:User)=>{
+            userList.push(new User(x.fullName, x.email, x.userName, x.role));
+          })
+        }
+      }
+      return userList;
+    }));
+  }
+
   public getAllRole()
   {
 

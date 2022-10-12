@@ -113,9 +113,9 @@ namespace dotnetWebApi.Controllers
         }
 
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [Authorize(Roles ="User")]
-        [HttpGet("GetUser")]
-        public async Task<object> GetUser()
+        [Authorize(Roles ="User,Admin")]
+        [HttpGet("GetUserList")]
+        public async Task<object> GetUserList()
         {
             try
             {
