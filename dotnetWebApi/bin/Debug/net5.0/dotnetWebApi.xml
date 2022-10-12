@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>dotnetWebApi</name>
+    </assembly>
+    <members>
+        <member name="M:dotnetWebApi.Controllers.UserController.GetAllUser">
+             <summary>
+            Tüm kullanıcıları veritabanından getirir.
+             </summary>
+        </member>
+    </members>
+</doc>

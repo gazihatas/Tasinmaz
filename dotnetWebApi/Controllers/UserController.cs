@@ -89,6 +89,9 @@ namespace dotnetWebApi.Controllers
            
         }
 
+        /// <summary>
+        ///Tüm kullanıcıları veritabanından getirir.
+        /// </summary>
         [Authorize(Roles="Admin")]
         [HttpGet("GetAllUser")]
         public async Task<object> GetAllUser()
