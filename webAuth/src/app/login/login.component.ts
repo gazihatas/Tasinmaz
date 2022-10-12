@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router} from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Constants } from '../Helper/constants';
 import { ResponseModel } from '../Models/responseModel';
 import { User } from '../Models/user';
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder:FormBuilder,
     private userService:UserService,
-    private router:Router
+    private router:Router,
+    private toastr: ToastrService
      ) { }
 
   ngOnInit(): void {
@@ -42,8 +44,10 @@ export class LoginComponent implements OnInit {
         let user = data.dateSet as User;
         if(user.role=='Admin')
         {
+          this.toastr.success("Admin Rolü ile  başarıyla giriş yaptınız.");
           this.router.navigate(["/all-user-management"]);
         }else{
+          this.toastr.success("User Rolü ile  başarıyla giriş yaptınız.");
           this.router.navigate(["/user-management"]);
         }
 

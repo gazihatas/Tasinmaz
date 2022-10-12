@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Role } from '../Models/role';
 import { UserService } from '../services/user.service';
 
@@ -18,7 +20,12 @@ export class RegisterComponent implements OnInit {
     password:['',Validators.required]
   });
 
-  constructor(private formBuilder:FormBuilder, private userService:UserService) { }
+  constructor(
+    private formBuilder:FormBuilder,
+     private userService:UserService,
+     private toastr: ToastrService,
+    private router:Router,
+     ) { }
 
   ngOnInit(): void {
     this.getAllRoles();
@@ -38,10 +45,13 @@ export class RegisterComponent implements OnInit {
       this.registerForm.controls['email'].setValue("");
       this.registerForm.controls['password'].setValue("");
       this.roles.forEach(x=>x.isSelected=false);
+      this.toastr.success("Hesap oluşturdunuz lütfen giriş yapın");
+      this.router.navigate(["/login"]);
 
       console.log("response",data);
     },error=>{
       console.log("error",error);
+      this.toastr.error("Bir şeyler ters gitti, lütfen daha sonra tekrar deneyin.");
     })
   }
 
