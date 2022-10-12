@@ -7,7 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using dotnetWebApi.Data;
 using dotnetWebApi.Data.Entities;
+using dotnetWebApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -76,6 +78,9 @@ namespace dotnetWebApi
                     builder.AllowAnyMethod();
                 });
             });
+            
+            //Özel Yanıt için Yetkilendirme Ara Yazılımının davranışını özelleştirme
+            services.AddSingleton<IAuthorizationMiddlewareResultHandler,AuthorizationMiddlewareResultHandlerService>();
             
             services.AddControllers();
             services.AddSwaggerGen(c =>

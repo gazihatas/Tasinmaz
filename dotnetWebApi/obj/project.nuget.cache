@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Ucu/gyQFcEc7OmDJk56IkfCU6T8+nlxGcGqLYnG20Xq/sr30Xew0YosO42OcSo0ocDhVXqqHEhhUcIMmy78p5Q==",
+  "dgSpecHash": "wJ32q1oBNyHMmH5oT6vJHMwxNY7aJ5R8ACBGbAp05KBB7GrY+N3SkrmaYpu7JAiw8F0hpw6N+vfFN8bpeo5GFA==",
   "success": true,
-  "projectFilePath": "C:\\dotnetClaim\\dotnetWebApi\\dotnetWebApi.csproj",
+  "projectFilePath": "C:\\Users\\hp\\Documents\\Tasinmaz\\dotnetWebApi\\dotnetWebApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hp\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\5.0.17\\microsoft.aspnetcore.authentication.jwtbearer.5.0.17.nupkg.sha512",
