@@ -33,7 +33,16 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/vendor/jquery/jquery.min.js",
+              "src/assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
+              "src/assets/vendor/jquery-easing/jquery.easing.min.js",
+              "src/assets/js/sb-admin-2.js",
+              "src/assets/js/sb-admin-2.min.js",
+              "src/assets/vendor/datatables/jquery.dataTables.min.js",
+              "src/assets/vendor/datatables/dataTables.bootstrap4.min.js",
+              "src/assets/js/demo/datatables-demo.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -127,5 +136,8 @@
       }
     }
   },
-  "defaultProject": "webAuth"
+  "defaultProject": "webAuth",
+  "cli": {
+    "analytics": false
+  }
 }

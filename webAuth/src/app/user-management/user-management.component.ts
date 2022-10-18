@@ -8,7 +8,8 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./user-management.component.scss']
 })
 export class UserManagementComponent implements OnInit {
-
+  totalLength:any;
+  page:number = 1;
   public userList:User[] = [];
   constructor(private userService:UserService) { }
 

@@ -14,11 +14,7 @@ export class RegisterComponent implements OnInit {
 
   public roles:Role[]= [];
 
-  public registerForm=this.formBuilder.group({
-    fullName:['',[Validators.required]],
-    email:['',[Validators.email,Validators.required]],
-    password:['',Validators.required]
-  });
+  public registerForm;
 
   constructor(
     private formBuilder:FormBuilder,
@@ -28,6 +24,12 @@ export class RegisterComponent implements OnInit {
      ) { }
 
   ngOnInit(): void {
+    this.registerForm=this.formBuilder.group({
+      fullName:['',[Validators.required]],
+      email:['',[Validators.email,Validators.required]],
+      password:['',Validators.required]
+    });
+
     this.getAllRoles();
   }
 
@@ -45,8 +47,8 @@ export class RegisterComponent implements OnInit {
       this.registerForm.controls['email'].setValue("");
       this.registerForm.controls['password'].setValue("");
       this.roles.forEach(x=>x.isSelected=false);
-      this.toastr.success("Hesap oluşturdunuz lütfen giriş yapın");
-      this.router.navigate(["/login"]);
+      this.toastr.success(fullName+" adlı kullanıcı başarıyla oluşturuldu.");
+      //this.router.navigate(["/login"]);
 
       console.log("response",data);
     },error=>{

@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <div class="row justify-content-center">
     <div class="col-10">
       <div class="card">
@@ -26,4 +26,110 @@
     </div>
   </div>
 </div>
+
+ -->
+<div id="wrapper">
+
+  <!-- Sol Navbar-->
+  <app-navbar></app-navbar>
+
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+      <!-- Ust Navbar -->
+      <app-ust-navbar></app-ust-navbar>
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+        <!-- İçerik Alanı -->
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Kullanıcılar</h6>
+          </div>
+
+          <!-- <div class="alert alert-warning" role="alert"  *ngIf="userList<1">
+            Kullanıcı bulunmamaktadır.
+          </div> -->
+
+
+          <div class="card-body">
+            <div class="table-responsive">
+
+              <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <!-- <div class="row">
+                  <div class="col-sm-12 col-md-6">
+
+                  <div class="col-sm-12 col-md-6">
+                    <div id="dataTable_filter" class="dataTables_filter"><label>Search:<input type="search"
+                          class="form-control form-control-sm" placeholder="" aria-controls="dataTable"></label>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0"
+                      role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                      <thead>
+                        <tr role="row">
+                          <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                            colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending"
+                            style="width: 97px;">İsim Soyisim</th>
+                          <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                            aria-label="Position: activate to sort column ascending" style="width: 143px;">Email</th>
+                          <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                            aria-label="Office: activate to sort column ascending" style="width: 70px;">Kullanıcı Adı</th>
+                          <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                            aria-label="Age: activate to sort column ascending" style="width: 31px;">Rol</th>
+                      </thead>
+
+                      <tbody>
+                        <tr class="even" *ngFor="let user of userList |  paginate: { itemsPerPage:10, currentPage: page}">
+                          <td>{{user.fullName}}</td>
+                          <td>{{user.email}}</td>
+                          <td>{{user.userName}}</td>
+                          <td>{{user.role}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 col-md-5">
+
+                  </div>
+                  <div class="col-sm-12 col-md-7">
+                    <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+
+                    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+
+
+
+      </div>
+      <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+
+  </div>
+  <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
 

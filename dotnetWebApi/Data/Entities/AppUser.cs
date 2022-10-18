@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Data.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace dotnetWebApi.Data.Entities
+namespace Data.Entities
 {
     public class AppUser : IdentityUser
     {
@@ -12,6 +14,10 @@ namespace dotnetWebApi.Data.Entities
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
         
+        public List<Article> Articles { get; set; }
+
+     
+   // public Guid User { get; set; }
         // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         // public int UserId { get; set; }
     }

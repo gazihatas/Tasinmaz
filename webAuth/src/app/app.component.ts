@@ -16,6 +16,7 @@ export class AppComponent {
   onLogout()
   {
     localStorage.removeItem(Constants.USER_KEY);
+    
   }
 
   get isUserlogin()

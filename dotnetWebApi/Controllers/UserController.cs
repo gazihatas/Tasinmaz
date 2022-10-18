@@ -1,4 +1,4 @@
-using dotnetWebApi.Data.Entities;
+using Data.Entities;
 using dotnetWebApi.Enums;
 using dotnetWebApi.Model.DTO;
 using dotnetWebApi.Models;
@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Models;
+using Models.BindingModel;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -103,8 +104,8 @@ namespace dotnetWebApi.Controllers
                 foreach (var user in users)
                 {
                     var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
-
-                    allUserDTO.Add(new UserDTO(user.FullName, user.Email, user.UserName, user.DateCreated, role));
+                    // allUserDTO.Add(new UserDTO(user.FullName, user.Email, user.UserName, user.DateCreated, role));
+                    allUserDTO.Add(new UserDTO(user.FullName, user.Email, user.UserName, user.DateCreated, role,user.Id));
                 }
 
                 return await Task.FromResult(new ResponseModel(ResponseCode.OK,"",allUserDTO));
@@ -132,7 +133,8 @@ namespace dotnetWebApi.Controllers
                     var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
                     if(role=="User")
                     {
-                        allUserDTO.Add(new UserDTO(user.FullName, user.Email, user.UserName, user.DateCreated, role));  
+                       //allUserDTO.Add(new UserDTO(user.FullName, user.Email, user.UserName, user.DateCreated, role)); 
+                        allUserDTO.Add(new UserDTO(user.FullName, user.Email, user.UserName, user.DateCreated, role,user.Id));  
                     }
                      
                 }            
@@ -164,7 +166,8 @@ namespace dotnetWebApi.Controllers
                         var appUser = await _userManager.FindByEmailAsync(model.Email);
                         var role = (await _userManager.GetRolesAsync(appUser)).FirstOrDefault();
 
-                        var user = new UserDTO(appUser.FullName, appUser.Email, appUser.UserName, appUser.DateCreated,role);
+                        //var user = new UserDTO(appUser.FullName, appUser.Email, appUser.UserName, appUser.DateCreated,role);
+                        var user = new UserDTO(appUser.FullName, appUser.Email, appUser.UserName, appUser.DateCreated,role,appUser.Id);
                         user.Token= GenerateToken(appUser,role);
                         //return await Task.FromResult(user);
                         return await Task.FromResult(new ResponseModel(ResponseCode.OK, "",user));
@@ -198,7 +201,7 @@ namespace dotnetWebApi.Controllers
         }
 
 
-        [Authorize(Roles="Admin")]
+        // [Authorize(Roles="Admin")]
         [HttpPost("AddRole")]
         public async Task<object> AddRole([FromBody] AddRoleBindingModel model)
         {
@@ -230,6 +233,87 @@ namespace dotnetWebApi.Controllers
             }
             
         }
+
+        [HttpPut("EditUser")]
+        public async Task<object> EditUser([FromBody] EditUserViewModel model)
+        {
+            try
+            {    //var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+                    // allUserDTO.Add(new UserDTO(user.FullName, user.Email, user.UserName, user.DateCreated, role));
+                var user = await _userManager.FindByIdAsync(model.Id);
+               // var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+                
+                if(user == null)  
+                {
+                    return await Task.FromResult(new ResponseModel(ResponseCode.Error, "Parametre girmeniz bekleniyor.",null));
+                }
+                else
+                {
+                    // List<UserDTO> allUserDTO=new List<UserDTO>();
+                    // var users = _userManager.Users.ToList();
+                    // foreach (var user in users)
+                    // {
+                    //     var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+                    //     // allUserDTO.Add(new UserDTO(user.FullName, user.Email, user.UserName, user.DateCreated, role));
+                    //     allUserDTO.Add(new UserDTO(user.FullName, user.Email, user.UserName, user.DateCreated, role,user.Id));
+                    // }
+
+
+
+
+                    //allUserDTO.Add(new UserDTO(user.FullName, user.Email, user.UserName, user.DateCreated, role,user.Id));
+                    var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+                    user.FullName = model.FullName;
+                    user.Email = model.Email;
+                    user.PasswordHash = model.Password;
+                    role=model.Role;
+                    // var resultRole = await _roleManager.CreateAsync(role);
+                    var result = await _userManager.UpdateAsync(user);
+                    
+                    if(result.Succeeded)
+                    {
+                     return await Task.FromResult(new ResponseModel(ResponseCode.OK,"Kayıt güncellendi.",user));
+                    }
+                    
+                    return await Task.FromResult(new ResponseModel(ResponseCode.Error,"Kayıt güncellendi.",user));
+                }
+
+
+            }
+             catch (Exception ex)
+            {
+                return await Task.FromResult(new ResponseModel(ResponseCode.Error, ex.Message,null));
+            }
+        }
+
+
+        [Authorize(Roles="Admin")]    
+        [HttpPost("DeleteUser")]
+        public async Task<object> DeleteUser([FromBody] string id)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(id);
+
+                if(user == null)  
+                {
+                    return await Task.FromResult(new ResponseModel(ResponseCode.Error, "Parametre girmeniz bekleniyor.",null));
+                }
+                //var book = _context.Books.Include(x => x.Author).SingleOrDefault(x => x.Author.Id == AuthorId)
+                
+
+                 var result=await _userManager.DeleteAsync(user);
+
+                return await Task.FromResult(new ResponseModel(ResponseCode.OK,"Kayıt silindi.",user));
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(new ResponseModel(ResponseCode.Error, ex.Message,null));
+            }
+           
+        }
+
+
 
 
         private string GenerateToken(AppUser user, string role)

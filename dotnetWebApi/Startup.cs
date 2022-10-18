@@ -6,7 +6,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using dotnetWebApi.Data;
-using dotnetWebApi.Data.Entities;
+using Data.Entities;
+using dotnetWebApi.IServices;
 using dotnetWebApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -69,6 +70,8 @@ namespace dotnetWebApi
                     ValidAudience=audience,
                 };
             });
+
+            services.AddScoped<IArticleService,ArticleService>();
 
             //2 CORS
               services.AddCors(opt =>{
@@ -133,7 +136,8 @@ namespace dotnetWebApi
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "TASINMAZ API");
             });
 
-
+            app.UseStaticFiles();
+            
             app.UseHttpsRedirection();
 
             //3 CORS

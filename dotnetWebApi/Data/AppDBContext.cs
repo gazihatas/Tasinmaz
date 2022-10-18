@@ -1,4 +1,4 @@
-using dotnetWebApi.Data.Entities;
+using Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -10,5 +10,7 @@ namespace dotnetWebApi.Data
         public AppDBContext(DbContextOptions options) : base(options)
         {
         }
+        public DbSet<Article> Articles { get; set; }
+        public DbSet<AppUser> Kullanicilar { get; set; }
     }
 }

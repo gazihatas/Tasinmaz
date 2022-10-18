@@ -2,3 +2,16 @@
 @import "~node_modules/bootstrap/scss/bootstrap";
 
 @import '~ngx-toastr/toastr';
+
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
+/* Importing Datepicker SCSS file. */
+@import "~ngx-bootstrap/datepicker/bs-datepicker";
+
+//@import '/src/assets/vendor/fontawesome-free/css/all.min.scss';
+
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+@import '/src/assets/css/sb-admin-2.min.scss';
+

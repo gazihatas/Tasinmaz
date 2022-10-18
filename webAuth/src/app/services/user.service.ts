@@ -12,7 +12,7 @@ import { Role } from '../Models/role';
   providedIn: 'root'
 })
 export class UserService {
-  private readonly baseURL:string="https://localhost:5001/api/user/"
+  //private readonly baseURL:string="https://localhost:5001/api/user/"
   constructor(private httpClient:HttpClient) { }
 
   public login(email:string, password:string)
@@ -22,7 +22,7 @@ export class UserService {
       Password:password
     }
 
-    return this.httpClient.post<ResponseModel>(this.baseURL + "Login", body);
+    return this.httpClient.post<ResponseModel>(Constants.BASE_URL + "user/Login", body);
   }
 
 
@@ -35,7 +35,7 @@ export class UserService {
       Role:role
     }
 
-    return this.httpClient.post<ResponseModel>(this.baseURL + "RegisterUser", body);
+    return this.httpClient.post<ResponseModel>(Constants.BASE_URL + "user/RegisterUser", body);
   }
 
   public getAllUser()
@@ -46,14 +46,14 @@ export class UserService {
       'Authorization':`Bearer ${userInfo?.token}`
     });
 
-    return this.httpClient.get<ResponseModel>(this.baseURL + "GetAllUser",{headers:headers}).pipe(map(res=>{
+    return this.httpClient.get<ResponseModel>(Constants.BASE_URL + "user/GetAllUser",{headers:headers}).pipe(map(res=>{
       let userList = new Array<User>();
       if(res.responseCode==ResponseCode.OK)
       {
         if(res.dateSet)
         {
           res.dateSet.map((x:User)=>{
-            userList.push(new User(x.fullName, x.email, x.userName, x.role));
+            userList.push(new User(x.userId,x.fullName, x.email, x.userName, x.role));
           })
         }
       }
@@ -69,14 +69,14 @@ export class UserService {
       'Authorization':`Bearer ${userInfo?.token}`
     });
 
-    return this.httpClient.get<ResponseModel>(this.baseURL + "GetUserList",{headers:headers}).pipe(map(res=>{
+    return this.httpClient.get<ResponseModel>(Constants.BASE_URL+ "user/GetUserList",{headers:headers}).pipe(map(res=>{
       let userList = new Array<User>();
       if(res.responseCode==ResponseCode.OK)
       {
         if(res.dateSet)
         {
           res.dateSet.map((x:User)=>{
-            userList.push(new User(x.fullName, x.email, x.userName, x.role));
+            userList.push(new User(x.userId,x.fullName, x.email, x.userName, x.role));
           })
         }
       }
@@ -92,7 +92,7 @@ export class UserService {
       'Authorization':`Bearer ${userInfo?.token}`
     });
 
-    return this.httpClient.get<ResponseModel>(this.baseURL + "GetRoles",{headers:headers}).pipe(map(res=>{
+    return this.httpClient.get<ResponseModel>(Constants.BASE_URL + "user/GetRoles",{headers:headers}).pipe(map(res=>{
       let roleList = new Array<Role>();
       if(res.responseCode==ResponseCode.OK)
       {
@@ -106,5 +106,23 @@ export class UserService {
       return roleList;
     }));
   }
+
+  public deleteUser(userId:string)
+  {
+    let userInfo = JSON.parse(localStorage.getItem(Constants.USER_KEY));
+    const headers= new HttpHeaders({
+      'Authorization':`Bearer ${userInfo?.token}`
+    });
+
+    const body = {
+      Id:userId
+    }
+
+    return this.httpClient.post<ResponseModel>(Constants.BASE_URL + "User/DeleteUser",body,{headers:headers});
+  }
+
+  // public deleteUser(userId:string){
+  //   return this.httpClient.delete<ResponseModel>(Constants.BASE_URL+'user/UserDelete/' + userId );
+  // }
 
 }
