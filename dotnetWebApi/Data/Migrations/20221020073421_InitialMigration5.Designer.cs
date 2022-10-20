@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dotnetWebApi.Data;
 
 namespace dotnetWebApi.Data.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221020073421_InitialMigration5")]
+    partial class InitialMigration5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,138 +125,6 @@ namespace dotnetWebApi.Data.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("Articles");
-                });
-
-            modelBuilder.Entity("Data.Entities.Il", b =>
-                {
-                    b.Property<int>("IlId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("IlName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IlId");
-
-                    b.ToTable("Il");
-                });
-
-            modelBuilder.Entity("Data.Entities.Ilce", b =>
-                {
-                    b.Property<int>("Ilceid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("IlId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Ilcename")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Ilceid");
-
-                    b.HasIndex("IlId");
-
-                    b.ToTable("Ilce");
-                });
-
-            modelBuilder.Entity("Data.Entities.Log", b =>
-                {
-                    b.Property<int>("logid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("acıklama")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("durum")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("islemtipi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("logIp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("tarih")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("logid");
-
-                    b.ToTable("Log");
-                });
-
-            modelBuilder.Entity("Data.Entities.Mahalle", b =>
-                {
-                    b.Property<int>("MahalleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("IlceId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MahalleName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MahalleId");
-
-                    b.HasIndex("IlceId");
-
-                    b.ToTable("Mahalle");
-                });
-
-            modelBuilder.Entity("Data.Entities.Tasinmaz", b =>
-                {
-                    b.Property<int>("TasinmazId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Ada")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Adres")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Il")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Ilce")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Kordinat")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MahalleId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nitelik")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Parsel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("coorX")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("coorY")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("TasinmazId");
-
-                    b.HasIndex("MahalleId");
-
-                    b.ToTable("Tasinmaz");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -395,39 +265,6 @@ namespace dotnetWebApi.Data.Migrations
                         .HasForeignKey("AppUserId");
 
                     b.Navigation("AppUser");
-                });
-
-            modelBuilder.Entity("Data.Entities.Ilce", b =>
-                {
-                    b.HasOne("Data.Entities.Il", "Il")
-                        .WithMany()
-                        .HasForeignKey("IlId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Il");
-                });
-
-            modelBuilder.Entity("Data.Entities.Mahalle", b =>
-                {
-                    b.HasOne("Data.Entities.Ilce", "Ilce")
-                        .WithMany()
-                        .HasForeignKey("IlceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ilce");
-                });
-
-            modelBuilder.Entity("Data.Entities.Tasinmaz", b =>
-                {
-                    b.HasOne("Data.Entities.Mahalle", "Mahalle")
-                        .WithMany()
-                        .HasForeignKey("MahalleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Mahalle");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

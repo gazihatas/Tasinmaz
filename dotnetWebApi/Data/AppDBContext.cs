@@ -12,5 +12,13 @@ namespace dotnetWebApi.Data
         }
         public DbSet<Article> Articles { get; set; }
         public DbSet<AppUser> Kullanicilar { get; set; }
+        public DbSet<Tasinmaz> Tasinmaz { get; set; }
+        public DbSet<Il> Il { get; set; }
+        public DbSet<Ilce> Ilce { get; set; }
+
+        public DbSet<Mahalle> Mahalle { get; set; }
+
+        public DbSet<Log> Log { get; set; }
+
     }
 }
