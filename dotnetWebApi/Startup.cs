@@ -71,7 +71,9 @@ namespace dotnetWebApi
                 };
             });
 
+            //Servis Tanımlaması
             services.AddScoped<IArticleService,ArticleService>();
+            services.AddScoped<IArsaService,ArsaService>();
 
             //2 CORS
               services.AddCors(opt =>{

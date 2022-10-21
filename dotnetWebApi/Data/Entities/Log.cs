@@ -7,13 +7,12 @@ namespace Data.Entities
     {
         [Key]
         public int logid { get; set; }
-        public Boolean durum { get; set; }
-        public string  islemtipi { get; set; }
-        public string acıklama { get; set; }
-        public DateTime tarih { get; set; }
-
-        public string logIp { get; set; }
-
         public int UserId { get; set; }
+        public string Durum { get; set; }
+        public string  IslemTipi { get; set; }
+        public string Aciklama { get; set; }
+        public string DateTime { get; set; }
+        public string UserIp { get; set; }
+
     }
 }

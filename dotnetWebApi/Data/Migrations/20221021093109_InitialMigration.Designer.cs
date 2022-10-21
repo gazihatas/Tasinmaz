@@ -10,8 +10,8 @@ using dotnetWebApi.Data;
 namespace dotnetWebApi.Data.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20221020073421_InitialMigration5")]
-    partial class InitialMigration5
+    [Migration("20221021093109_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -125,6 +125,140 @@ namespace dotnetWebApi.Data.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("Articles");
+                });
+
+            modelBuilder.Entity("Data.Entities.Il", b =>
+                {
+                    b.Property<int>("IlId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("IlName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IlId");
+
+                    b.ToTable("Ils");
+                });
+
+            modelBuilder.Entity("Data.Entities.Ilce", b =>
+                {
+                    b.Property<int>("Ilceid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("IlId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Ilcename")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Ilceid");
+
+                    b.HasIndex("IlId");
+
+                    b.ToTable("Ilces");
+                });
+
+            modelBuilder.Entity("Data.Entities.Log", b =>
+                {
+                    b.Property<int>("logid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Aciklama")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DateTime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Durum")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IslemTipi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserIp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("logid");
+
+                    b.ToTable("Logs");
+                });
+
+            modelBuilder.Entity("Data.Entities.Mahalle", b =>
+                {
+                    b.Property<int>("MahalleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("IlceId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MahalleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MahalleId");
+
+                    b.HasIndex("IlceId");
+
+                    b.ToTable("Mahalles");
+                });
+
+            modelBuilder.Entity("Data.Entities.Tasinmaz", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Ada")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Adres")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("IlId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IlceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MahalleId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nitelik")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Parsel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ParselCoordinate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("XCoordinate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("YCoordinate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("MahalleId");
+
+                    b.ToTable("Tasinmazs");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -267,6 +401,45 @@ namespace dotnetWebApi.Data.Migrations
                     b.Navigation("AppUser");
                 });
 
+            modelBuilder.Entity("Data.Entities.Ilce", b =>
+                {
+                    b.HasOne("Data.Entities.Il", "Il")
+                        .WithMany()
+                        .HasForeignKey("IlId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Il");
+                });
+
+            modelBuilder.Entity("Data.Entities.Mahalle", b =>
+                {
+                    b.HasOne("Data.Entities.Ilce", "Ilce")
+                        .WithMany()
+                        .HasForeignKey("IlceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ilce");
+                });
+
+            modelBuilder.Entity("Data.Entities.Tasinmaz", b =>
+                {
+                    b.HasOne("Data.Entities.AppUser", "AppUser")
+                        .WithMany("Tasinmazs")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("Data.Entities.Mahalle", "Mahalle")
+                        .WithMany()
+                        .HasForeignKey("MahalleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Mahalle");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -321,6 +494,8 @@ namespace dotnetWebApi.Data.Migrations
             modelBuilder.Entity("Data.Entities.AppUser", b =>
                 {
                     b.Navigation("Articles");
+
+                    b.Navigation("Tasinmazs");
                 });
 #pragma warning restore 612, 618
         }

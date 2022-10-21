@@ -15,6 +15,7 @@ namespace Data.Entities
         public DateTime DateModified { get; set; }
         
         public List<Article> Articles { get; set; }
+        public List<Tasinmaz> Tasinmazs { get; set; }
 
      
    // public Guid User { get; set; }

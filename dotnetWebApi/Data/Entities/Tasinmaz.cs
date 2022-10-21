@@ -2,20 +2,30 @@ namespace Data.Entities
 {
     public class Tasinmaz
     {
-        public int TasinmazId { get; set; }
-        public int Il { get; set; }
-        public  Mahalle Mahalle{ get; set; }
-        public int Ilce { get; set; }
-        public int MahalleId { get; set; }
-        public string Ada { get; set; }
-        public string Parsel { get; set; }
-        public int Kordinat { get; set; }
-        public string Nitelik { get; set; }
+        public int id { get; set; }
 
+        public int IlId { get; set; }
+        public  Mahalle Mahalle{ get; set; }
+        // public Il Il { get; set; }
+
+        public int IlceId { get; set; }
+        // public Ilce Ilce { get; set; }
+
+        public int MahalleId { get; set; }
+        
+        
         public string Adres { get; set; }
 
-        public int UserId { get; set; }
-        public string coorX { get; set; }
-        public string  coorY { get; set; }
+        public string AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
+
+        public int Parsel { get; set; }
+        public int Ada { get; set; }
+        public string Nitelik { get; set; }
+        public string  XCoordinate { get; set; }
+        public string  YCoordinate { get; set; }
+        public string ParselCoordinate  { get; set; }
+
+        
     }
 }

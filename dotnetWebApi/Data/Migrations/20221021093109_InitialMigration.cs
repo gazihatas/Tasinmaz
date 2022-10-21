@@ -26,8 +26,6 @@ namespace dotnetWebApi.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateModified = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -52,6 +50,37 @@ namespace dotnetWebApi.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Ils",
+                columns: table => new
+                {
+                    IlId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IlName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ils", x => x.IlId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Logs",
+                columns: table => new
+                {
+                    logid = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Durum = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IslemTipi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Aciklama = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserIp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Logs", x => x.logid);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -70,6 +99,30 @@ namespace dotnetWebApi.Data.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Articles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Body = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Publish = table.Column<bool>(type: "bit", nullable: false),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Articles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Articles_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,6 +210,86 @@ namespace dotnetWebApi.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Ilces",
+                columns: table => new
+                {
+                    Ilceid = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Ilcename = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IlId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ilces", x => x.Ilceid);
+                    table.ForeignKey(
+                        name: "FK_Ilces_Ils_IlId",
+                        column: x => x.IlId,
+                        principalTable: "Ils",
+                        principalColumn: "IlId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Mahalles",
+                columns: table => new
+                {
+                    MahalleId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MahalleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IlceId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Mahalles", x => x.MahalleId);
+                    table.ForeignKey(
+                        name: "FK_Mahalles_Ilces_IlceId",
+                        column: x => x.IlceId,
+                        principalTable: "Ilces",
+                        principalColumn: "Ilceid",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tasinmazs",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IlId = table.Column<int>(type: "int", nullable: false),
+                    IlceId = table.Column<int>(type: "int", nullable: false),
+                    MahalleId = table.Column<int>(type: "int", nullable: false),
+                    Adres = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Parsel = table.Column<int>(type: "int", nullable: false),
+                    Ada = table.Column<int>(type: "int", nullable: false),
+                    Nitelik = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    XCoordinate = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    YCoordinate = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParselCoordinate = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tasinmazs", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Tasinmazs_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Tasinmazs_Mahalles_MahalleId",
+                        column: x => x.MahalleId,
+                        principalTable: "Mahalles",
+                        principalColumn: "MahalleId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Articles_AppUserId",
+                table: "Articles",
+                column: "AppUserId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -195,10 +328,33 @@ namespace dotnetWebApi.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ilces_IlId",
+                table: "Ilces",
+                column: "IlId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Mahalles_IlceId",
+                table: "Mahalles",
+                column: "IlceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tasinmazs_AppUserId",
+                table: "Tasinmazs",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tasinmazs_MahalleId",
+                table: "Tasinmazs",
+                column: "MahalleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Articles");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -215,10 +371,25 @@ namespace dotnetWebApi.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Logs");
+
+            migrationBuilder.DropTable(
+                name: "Tasinmazs");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Mahalles");
+
+            migrationBuilder.DropTable(
+                name: "Ilces");
+
+            migrationBuilder.DropTable(
+                name: "Ils");
         }
     }
 }

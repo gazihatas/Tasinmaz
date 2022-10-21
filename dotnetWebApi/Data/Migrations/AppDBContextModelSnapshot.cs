@@ -137,7 +137,7 @@ namespace dotnetWebApi.Data.Migrations
 
                     b.HasKey("IlId");
 
-                    b.ToTable("Il");
+                    b.ToTable("Ils");
                 });
 
             modelBuilder.Entity("Data.Entities.Ilce", b =>
@@ -157,7 +157,7 @@ namespace dotnetWebApi.Data.Migrations
 
                     b.HasIndex("IlId");
 
-                    b.ToTable("Ilce");
+                    b.ToTable("Ilces");
                 });
 
             modelBuilder.Entity("Data.Entities.Log", b =>
@@ -167,27 +167,27 @@ namespace dotnetWebApi.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Aciklama")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DateTime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Durum")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IslemTipi")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<string>("acıklama")
+                    b.Property<string>("UserIp")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("durum")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("islemtipi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("logIp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("tarih")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("logid");
 
-                    b.ToTable("Log");
+                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("Data.Entities.Mahalle", b =>
@@ -207,29 +207,29 @@ namespace dotnetWebApi.Data.Migrations
 
                     b.HasIndex("IlceId");
 
-                    b.ToTable("Mahalle");
+                    b.ToTable("Mahalles");
                 });
 
             modelBuilder.Entity("Data.Entities.Tasinmaz", b =>
                 {
-                    b.Property<int>("TasinmazId")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Ada")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Ada")
+                        .HasColumnType("int");
 
                     b.Property<string>("Adres")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Il")
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("IlId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Ilce")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Kordinat")
+                    b.Property<int>("IlceId")
                         .HasColumnType("int");
 
                     b.Property<int>("MahalleId")
@@ -238,23 +238,25 @@ namespace dotnetWebApi.Data.Migrations
                     b.Property<string>("Nitelik")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Parsel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
+                    b.Property<int>("Parsel")
                         .HasColumnType("int");
 
-                    b.Property<string>("coorX")
+                    b.Property<string>("ParselCoordinate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("coorY")
+                    b.Property<string>("XCoordinate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("TasinmazId");
+                    b.Property<string>("YCoordinate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("MahalleId");
 
-                    b.ToTable("Tasinmaz");
+                    b.ToTable("Tasinmazs");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -421,11 +423,17 @@ namespace dotnetWebApi.Data.Migrations
 
             modelBuilder.Entity("Data.Entities.Tasinmaz", b =>
                 {
+                    b.HasOne("Data.Entities.AppUser", "AppUser")
+                        .WithMany("Tasinmazs")
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("Data.Entities.Mahalle", "Mahalle")
                         .WithMany()
                         .HasForeignKey("MahalleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Mahalle");
                 });
@@ -484,6 +492,8 @@ namespace dotnetWebApi.Data.Migrations
             modelBuilder.Entity("Data.Entities.AppUser", b =>
                 {
                     b.Navigation("Articles");
+
+                    b.Navigation("Tasinmazs");
                 });
 #pragma warning restore 612, 618
         }
