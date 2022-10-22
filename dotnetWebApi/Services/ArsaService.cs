@@ -18,19 +18,8 @@ namespace dotnetWebApi.Services
         {
             _context = context;
         }
-
-        public async Task<Tasinmaz> AddUpdateTasinmaz(int id,
-                                                int IlId,
-                                                int IlceId,
-                                                int MahalleId,
-                                                string Adres,
-                                                int Parsel,
-                                                string Nitelik,
-                                                string XCoordinate,
-                                                string YCoordinate,
-                                                string ParselCoordinate,
-                                                string authorId
-                                                )
+        
+        public async Task<Tasinmaz> AddUpdateTasinmaz(int id, int IlId, int IlceId, int MahalleId, string Adres, int Parsel, int Ada, string Nitelik, string XCoordinate, string YCoordinate, string ParselCoordinate, string authorId)
         {
              var tempTasinmaz = _context.Tasinmazs.FirstOrDefault(x =>x.id == id);
 
@@ -42,6 +31,7 @@ namespace dotnetWebApi.Services
                     MahalleId= MahalleId,
                     Adres=Adres,
                     Parsel = Parsel,
+                    Ada = Ada,
                     Nitelik = Nitelik,
                     XCoordinate=XCoordinate,
                     YCoordinate=YCoordinate,
@@ -68,6 +58,62 @@ namespace dotnetWebApi.Services
             await _context.SaveChangesAsync();
             return tempTasinmaz;
         }
+
+
+
+
+        // public async Task<Tasinmaz> AddUpdateTasinmaz(int id,
+        //                                         int IlId,
+        //                                         int IlceId,
+        //                                         int MahalleId,
+        //                                         string Adres,
+        //                                         int Parsel,
+        //                                         int Ada,
+        //                                         string Nitelik,
+        //                                         string XCoordinate,
+        //                                         string YCoordinate,
+        //                                         string ParselCoordinate,
+        //                                         string authorId
+        //                                         )
+        // {
+        //      var tempTasinmaz = _context.Tasinmazs.FirstOrDefault(x =>x.id == id);
+
+        //     if(tempTasinmaz==null)
+        //     {
+        //         tempTasinmaz = new Tasinmaz(){
+        //             IlId = IlId,
+        //             IlceId = IlceId,
+        //             MahalleId= MahalleId,
+        //             Adres=Adres,
+        //             Parsel = Parsel,
+        //             Nitelik = Nitelik,
+        //             XCoordinate=XCoordinate,
+        //             YCoordinate=YCoordinate,
+        //             ParselCoordinate=ParselCoordinate,
+        //             AppUserId = authorId
+        //         };
+
+        //         await _context.Tasinmazs.AddAsync(tempTasinmaz);
+        //         await _context.SaveChangesAsync();
+        //         return tempTasinmaz;
+        //     }
+        //     tempTasinmaz.IlId = IlId;
+        //     tempTasinmaz.IlceId= IlceId;
+        //     tempTasinmaz.MahalleId = MahalleId;
+        //     tempTasinmaz.Adres = Adres;
+        //     tempTasinmaz.Parsel = Parsel;
+        //     tempTasinmaz.Nitelik = Nitelik;
+        //     tempTasinmaz.XCoordinate = XCoordinate;
+        //     tempTasinmaz.YCoordinate = YCoordinate;
+        //     tempTasinmaz.ParselCoordinate = ParselCoordinate;
+        //     tempTasinmaz.AppUserId = authorId;
+
+        //     _context.Update(tempTasinmaz);
+        //     await _context.SaveChangesAsync();
+        //     return tempTasinmaz;
+        // }
+
+
 
         public async Task<bool> DeleteTasinmaz(int id)
         {

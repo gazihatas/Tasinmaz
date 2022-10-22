@@ -16,6 +16,7 @@ namespace dotnetWebApi.IServices
                                         int MahalleId,
                                         string Adres,
                                         int Parsel,
+                                        int Ada,
                                         string Nitelik,
                                         string XCoordinate,
                                         string YCoordinate,
@@ -28,6 +29,7 @@ namespace dotnetWebApi.IServices
         //Task<List<ArticleDTO>> GetAllArticle(string authorId);
 
         Task<List<TasinmazDTO>> GetAllTasinmaz(string authorId);
+        
     }
 }
     // public interface IArticleService

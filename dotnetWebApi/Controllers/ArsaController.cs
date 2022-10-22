@@ -26,22 +26,57 @@ namespace dotnetWebApi.Controllers
         }
 
 
+        // [HttpPost("AddUpdateTasinmaz")]
+        // public async Task<object> AddUpdateTasinmaz([FromBody] AddUpdateTasinmaz model)
+        // {
+        //     try
+        //     {
+        //         if(model == null || model.IlId <1)
+        //         {
+        //             return await Task.FromResult(new ResponseModel(ResponseCode.Error, "Parametre girmeniz bekleniyor.",null));
+        //         }
+
+        //         var result = await _arsaService.AddUpdateTasinmaz(model.id, 
+        //                                                         model.IlId,
+        //                                                         model.IlceId,
+        //                                                         model.MahalleId,
+        //                                                         model.Adres,
+        //                                                         model.Parsel,
+        //                                                         model.Nitelik,
+        //                                                         model.XCoordinate,
+        //                                                         model.YCoordinate,
+        //                                                         model.ParselCoordinate,
+        //                                                         model.AppUserId
+        //                                                         );
+
+        //         return await Task.FromResult(new ResponseModel(ResponseCode.OK,("Yeni kayıt eklendi"),result));
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         return await Task.FromResult(new ResponseModel(ResponseCode.Error, ex.Message,null));
+        //     }
+           
+        // }
+
+        
         [HttpPost("AddUpdateTasinmaz")]
-        public async Task<object> AddUpdateTasinmaz([FromBody] AddUpdateTasinmaz model)
+        public async Task<object> AddUpdateArticle([FromBody] AddUpdateTasinmaz model)
         {
             try
             {
+                
                 if(model == null || model.IlId <1)
                 {
                     return await Task.FromResult(new ResponseModel(ResponseCode.Error, "Parametre girmeniz bekleniyor.",null));
                 }
 
-                var result = await _arsaService.AddUpdateTasinmaz(model.id, 
+                 var result = await _arsaService.AddUpdateTasinmaz(model.id, 
                                                                 model.IlId,
                                                                 model.IlceId,
                                                                 model.MahalleId,
                                                                 model.Adres,
                                                                 model.Parsel,
+                                                                model.Ada,
                                                                 model.Nitelik,
                                                                 model.XCoordinate,
                                                                 model.YCoordinate,
@@ -49,7 +84,7 @@ namespace dotnetWebApi.Controllers
                                                                 model.AppUserId
                                                                 );
 
-                return await Task.FromResult(new ResponseModel(ResponseCode.OK,("Yeni kayıt eklendi"),result));
+                return await Task.FromResult(new ResponseModel(ResponseCode.OK,(model.id >0?"Kayıt Edilen Güncelleme":"Yeni kayıt eklendi"),result));
             }
             catch (Exception ex)
             {

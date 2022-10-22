@@ -91,7 +91,7 @@ namespace dotnetWebApi.Controllers
         }
 
         /// <summary>
-        ///Tüm kullanıcıları veritabanından getirir.
+        ///Admin Rolu ile Tüm kullanıcıları veritabanından getirir.
         /// </summary>
         [Authorize(Roles="Admin")]
         [HttpGet("GetAllUser")]
@@ -116,6 +116,9 @@ namespace dotnetWebApi.Controllers
             }
         }
 
+        /// <summary>
+        ///Sadece User rölüne sahip kullanıcıları veritabanından getirir.
+        /// </summary>
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Authorize(Roles ="User,Admin")]
         [HttpGet("GetUserList")]
@@ -152,7 +155,9 @@ namespace dotnetWebApi.Controllers
 
 
 
-
+        /// <summary>
+        /// Giriş 
+        /// </summary>
         [HttpPost("Login")]
         public async Task<object> Login([FromBody] loginBindingModel model)
         {
@@ -184,6 +189,9 @@ namespace dotnetWebApi.Controllers
             }
         }
 
+        /// <summary>
+        ///Mevcut Rolleri Listeler.
+        /// </summary>
         //[Authorize(Roles="Admin")]
         [HttpGet("GetRoles")]
         public async Task<object> GetRoles()
@@ -200,7 +208,9 @@ namespace dotnetWebApi.Controllers
             }
         }
 
-
+        /// <summary>
+        ///Mevcut rol kayıtlarını getirir.
+        /// </summary>
         // [Authorize(Roles="Admin")]
         [HttpPost("AddRole")]
         public async Task<object> AddRole([FromBody] AddRoleBindingModel model)
@@ -234,6 +244,9 @@ namespace dotnetWebApi.Controllers
             
         }
 
+        /// <summary>
+        ///Admin Rolu ile Tüm kullanıcıları veritabanından getirir.
+        /// </summary>
         [HttpPut("EditUser")]
         public async Task<object> EditUser([FromBody] EditUserViewModel model)
         {
@@ -287,13 +300,16 @@ namespace dotnetWebApi.Controllers
         }
 
 
+        /// <summary>
+        ///Kullanıcı Silme.
+        /// </summary>
         [Authorize(Roles="Admin")]    
         [HttpPost("DeleteUser")]
         public async Task<object> DeleteUser([FromBody] string id)
         {
             try
             {
-                var user = await _userManager.FindByIdAsync(id);
+                var user = await _userManager.FindByIdAsync(id);    
 
                 if(user == null)  
                 {
