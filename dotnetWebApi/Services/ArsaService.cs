@@ -18,7 +18,7 @@ namespace dotnetWebApi.Services
         {
             _context = context;
         }
-        
+
         public async Task<Tasinmaz> AddUpdateTasinmaz(int id, int IlId, int IlceId, int MahalleId, string Adres, int Parsel, int Ada, string Nitelik, string XCoordinate, string YCoordinate, string ParselCoordinate, string authorId)
         {
              var tempTasinmaz = _context.Tasinmazs.FirstOrDefault(x =>x.id == id);
@@ -133,12 +133,17 @@ namespace dotnetWebApi.Services
           return await(
                 from tasinmaz in _context.Tasinmazs 
                // from tasinmaz in _context.Tasinmazs.Where(query)
+               //isimlendir düzeltilecek
+               //PascalCase iki tarafta MODEL CLASS büyük harf property büyük
                 where tasinmaz.AppUserId==authorId
                 select new TasinmazDTO() {
                     id = tasinmaz.id,
                     IlId = tasinmaz.IlId,
+                    IlAdi = _context.Ils.Where(s=>s.IlId==tasinmaz.IlId).Select(x=>x.IlName).FirstOrDefault(),
                     IlceId =  tasinmaz.IlceId,
+                    IlceAdi = _context.Ilces.Where(s=>s.Ilceid==tasinmaz.IlceId).Select(x=>x.Ilcename).FirstOrDefault(),
                     MahalleId= tasinmaz.MahalleId,
+                    MahalleAdi = _context.Mahalles.Where(s=>s.MahalleId==tasinmaz.IlceId).Select(x=>x.MahalleName).FirstOrDefault(),
                     Adres= tasinmaz.Adres,
                     Parsel = tasinmaz.Parsel,
                     Ada = tasinmaz.Ada,

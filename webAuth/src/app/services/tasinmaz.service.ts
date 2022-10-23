@@ -79,8 +79,9 @@ export class TasinmazService {
       {
         if(res.dateSet)
         {
+          console.log(res.dateSet);
           res.dateSet.map((x:any)=>{
-            tasinmazList.push(new Tasinmaz(x.id,x.IlId, x.IlceId, x.MahalleId,x.Adres,x.Parsel,x.Ada,x.Nitelik,x.XCoordinate,x.YCoordinate));
+            tasinmazList.push(new Tasinmaz(x.id,x.ilId, x.ilAdi, x.ilceId, x.ilceAdi, x.mahalleId,x.mahalleAdi,x.adres,x.parsel,x.ada,x.nitelik,x.xCoordinate,x.yCoordinate));
           })
         }
       }

@@ -9,6 +9,7 @@ namespace dotnetWebApi.IServices
 {
     public interface IArsaService
     {
+        //ilId
         Task<Tasinmaz> AddUpdateTasinmaz(
                                         int id, 
                                         int IlId,
