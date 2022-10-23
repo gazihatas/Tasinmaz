@@ -128,6 +128,22 @@ namespace dotnetWebApi.Services
              return await Task.FromResult(true);
         }
 
+        public async Task<List<Il>> GetAllSehir()
+        {
+            return await _context.Ils.ToListAsync();
+        }
+        public async Task<List<Ilce>> GetAllIlce(int id)
+        {
+            return await _context.Ilces.Include(a=>a.Il).Where(x=>x.IlId == id).ToListAsync();
+        }
+
+        public async Task<List<Mahalle>> GetAllMahalle(int id)
+        {
+              return await _context.Mahalles.Include(c=>c.Ilce).Where(x=>x.IlceId == id).ToListAsync();
+        }
+
+        
+
         public async Task<List<TasinmazDTO>> GetAllTasinmaz(string authorId)
         {
           return await(

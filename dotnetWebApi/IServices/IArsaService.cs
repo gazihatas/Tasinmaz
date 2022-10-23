@@ -30,6 +30,9 @@ namespace dotnetWebApi.IServices
         //Task<List<ArticleDTO>> GetAllArticle(string authorId);
 
         Task<List<TasinmazDTO>> GetAllTasinmaz(string authorId);
+        Task<List<Il>> GetAllSehir();
+        Task<List<Ilce>> GetAllIlce(int id);
+        Task<List<Mahalle>> GetAllMahalle(int id);
         
     }
 }

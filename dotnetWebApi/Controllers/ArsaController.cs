@@ -179,5 +179,58 @@ namespace dotnetWebApi.Controllers
            
         }
 
+
+        [HttpGet("Sehirler")]
+        public async Task<object> GetSehirler()
+        {
+            try
+            {
+                var sehirler = await _arsaService.GetAllSehir();
+                // return Ok(sehirler);
+
+                return await Task.FromResult(new ResponseModel(ResponseCode.OK,"",sehirler));
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(new ResponseModel(ResponseCode.Error, ex.Message,null));
+            }
+
+        }
+      
+        [HttpGet("Ilceler/{id}")]
+        public async Task<object> GetIlceler(int id)
+        {
+            try
+            {
+                 var ilceler = await _arsaService.GetAllIlce(id);
+                // return Ok(ilceler);
+
+                return await Task.FromResult(new ResponseModel(ResponseCode.OK,"",ilceler));
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(new ResponseModel(ResponseCode.Error, ex.Message,null));
+            }
+        }
+        
+
+        [HttpGet("Mahalleler/{id}")]
+        public async Task<object> GetMahalleler( int id)
+        {
+             try
+            {
+                var mahalleler = await _arsaService.GetAllMahalle(id);
+                //return Ok(neighbourhood);
+
+                return await Task.FromResult(new ResponseModel(ResponseCode.OK,"",mahalleler));
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(new ResponseModel(ResponseCode.Error, ex.Message,null));
+            }
+        }
+
+
+
     }
 }

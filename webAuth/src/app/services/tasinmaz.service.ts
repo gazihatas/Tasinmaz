@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { ResponseCode } from '../enums/responseCode';
 import { Constants } from '../Helper/constants';
@@ -10,8 +11,27 @@ import { Tasinmaz } from '../Models/tasinmaz';
   providedIn: 'root'
 })
 export class TasinmazService {
+  tasinmaz:[];
+  constructor(
+    private httpClient:HttpClient,
+    private formBuilder:FormBuilder
+    ) { }
 
-  constructor(private httpClient:HttpClient) { }
+  tasinmazAddForm=this.formBuilder.group({
+      Cities: ['',Validators.required],
+      Districts: [{value:'',disabled:false}],
+      Neighbourhoods:[{value:'',disabled:false}],
+      Adres:[null,Validators.required],
+      Ada:[null,Validators.required],
+      Parsel:[null,Validators.required],
+      Nitelik:[null,Validators.required],
+      xCoordinatesParsel:[null,Validators.required],
+      yCoordinatesParsel:[null,Validators.required]
+    });
+
+
+
+
 
   public deleteTasinmaz(tasinmazId:number)
   {
@@ -38,7 +58,6 @@ export class TasinmazService {
     nitelik:string,
     xCoordinate:string,
     yCoordinate:string,
-    parselCoordinate:string,
     userId:string) {
 
     let userInfo = JSON.parse(localStorage.getItem(Constants.USER_KEY));
@@ -56,7 +75,6 @@ export class TasinmazService {
       Nitelik:nitelik,
       XCoordinate:xCoordinate,
       YCoordinate:yCoordinate,
-      ParselCoordinate:parselCoordinate,
       AppUserId:userId
 
     }
@@ -89,30 +107,35 @@ export class TasinmazService {
     }));
   }
 
+  GetCities(){
+    return this.httpClient.get(Constants.BASE_URL+"Arsa/Sehirler").pipe( );
+  }
 
-  // public getAllUser()
-  // {
+  GetSingleCities(){
+    this.tasinmaz.forEach(function(value){
+      // this.service.getSingleCities( value.ilId).subscribe((result:any)=>{
+      //     return this.http.get(this.BaseURI+'/Tasinmaz/Cities/Single/'+result.ilName).subscribe((result:any)=>
+      //     {
+      //         this.citiName=result;
+      //     });
+      //   });
+    });
+  }
 
-  //   let userInfo = JSON.parse(localStorage.getItem(Constants.USER_KEY));
-  //   const headers= new HttpHeaders({
-  //     'Authorization':`Bearer ${userInfo?.token}`
-  //   });
+  GetDistricts(cityId:Number){
+    return this.httpClient.get(Constants.BASE_URL+"Arsa/Ilceler"+cityId).pipe( );
+  }
 
-  //   return this.httpClient.get<ResponseModel>(Constants.BASE_URL + "user/GetAllUser",{headers:headers}).pipe(map(res=>{
-  //     let userList = new Array<User>();
-  //     if(res.responseCode==ResponseCode.OK)
-  //     {
-  //       if(res.dateSet)
-  //       {
-  //         res.dateSet.map((x:User)=>{
-  //           userList.push(new User(x.userId,x.fullName, x.email, x.userName, x.role));
-  //         })
-  //       }
-  //     }
-  //     return userList;
-  //   }));
-  // }
+  GetSingleDistricts(distrtictId:Number){
 
+  }
+
+  GetNeighbourhood(districtsId:Number){
+    return this.httpClient.get(Constants.BASE_URL+'Arsa/Mahalleler/'+districtsId).pipe( );
+  }
+  GetSingleNeighbourhood(neighbourdId:Number){
+
+  }
 
 
 }
