@@ -1,1 +1,142 @@
-<p>list works!</p>
+<div id="wrapper">
+
+  <!-- Sol Navbar-->
+  <app-navbar></app-navbar>
+
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+      <!-- Ust Navbar -->
+      <app-ust-navbar></app-ust-navbar>
+
+
+
+
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+        <!-- İçerik Alanı -->
+
+
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Tasinmaz Tablosu</h6>
+          </div>
+
+          <!-- <div class="alert alert-warning" role="alert"  *ngIf="userList<1">
+            Kullanıcı bulunmamaktadır.
+          </div> -->
+
+
+          <div class="card-body">
+            <div class="table-responsive">
+
+              <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <!-- <div class="row">
+                  <div class="col-sm-12 col-md-6">
+
+                  <div class="col-sm-12 col-md-6">
+                    <div id="dataTable_filter" class="dataTables_filter"><label>Search:<input type="search"
+                          class="form-control form-control-sm" placeholder="" aria-controls="dataTable"></label>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0"
+                      role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                      <thead>
+                        <tr role="row">
+                          <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                            colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending"
+                            style="width: 97px;">Id</th>
+                          <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                            colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending"
+                            style="width: 97px;">İl</th>
+                          <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                          colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending"
+                          style="width: 97px;">İlçe</th>
+                          <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                            colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending"
+                            style="width: 97px;">Mahalle</th>
+                          <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                          colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending"
+                          style="width: 97px;">Adres</th>
+                          <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                          colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending"
+                          style="width: 97px;">Ada No</th>
+                          <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                            colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending"
+                            style="width: 97px;">Parsel No</th>
+                          <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                          colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending"
+                          style="width: 97px;">Nitelik</th>
+                          <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                            colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending"
+                            style="width: 97px;">Kordinata Git</th>
+
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr class="even" *ngFor="let tasinmaz of tasinmazList |  paginate: { itemsPerPage:10, currentPage: page}">
+                          <td>{{tasinmaz.id}}</td>
+                          <td>{{tasinmaz.ilId.IlName}}</td>
+                          <td>{{tasinmaz.ilceId}}</td>
+                          <td>{{tasinmaz.mahalleId}}</td>
+                          <td>{{tasinmaz.adres}}</td>
+                          <td>{{tasinmaz.parsel}}</td>
+                          <td>{{tasinmaz.ada}}</td>
+                          <td>{{tasinmaz.nitelik}}</td>
+                          <td>Kordinata git</td>
+
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 col-md-5">
+                    <!-- <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">Showing 1 to 10 of
+                      57 entries
+                    </div> -->
+                  </div>
+                  <div class="col-sm-12 col-md-7">
+                    <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                      <!-- aTable" data-dt-idx="7" tabindex="0" class="page-link">Sonraki</a></li>
+                      </ul>
+
+                      <pagination [totalItems]="30"></pagination>
+                    -->
+
+                    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+
+
+
+      </div>
+      <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+
+  </div>
+  <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->

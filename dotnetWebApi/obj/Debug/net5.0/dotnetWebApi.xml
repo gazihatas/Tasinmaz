@@ -6,7 +6,37 @@
     <members>
         <member name="M:dotnetWebApi.Controllers.UserController.GetAllUser">
              <summary>
-            Tüm kullanıcıları veritabanından getirir.
+            Admin Rolu ile Tüm kullanıcıları veritabanından getirir.
+             </summary>
+        </member>
+        <member name="M:dotnetWebApi.Controllers.UserController.GetUserList">
+             <summary>
+            Sadece User rölüne sahip kullanıcıları veritabanından getirir.
+             </summary>
+        </member>
+        <member name="M:dotnetWebApi.Controllers.UserController.Login(dotnetWebApi.Models.BindingModel.loginBindingModel)">
+            <summary>
+            Giriş 
+            </summary>
+        </member>
+        <member name="M:dotnetWebApi.Controllers.UserController.GetRoles">
+             <summary>
+            Mevcut Rolleri Listeler.
+             </summary>
+        </member>
+        <member name="M:dotnetWebApi.Controllers.UserController.AddRole(dotnetWebApi.Models.BindingModel.AddRoleBindingModel)">
+             <summary>
+            Mevcut rol kayıtlarını getirir.
+             </summary>
+        </member>
+        <member name="M:dotnetWebApi.Controllers.UserController.EditUser(Models.BindingModel.EditUserViewModel)">
+             <summary>
+            Admin Rolu ile Tüm kullanıcıları veritabanından getirir.
+             </summary>
+        </member>
+        <member name="M:dotnetWebApi.Controllers.UserController.DeleteUser(System.String)">
+             <summary>
+            Kullanıcı Silme.
              </summary>
         </member>
     </members>
