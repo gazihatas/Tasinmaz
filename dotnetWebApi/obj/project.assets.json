@@ -604,6 +604,19 @@
           }
         }
       },
+      "Newtonsoft.Json/13.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Swashbuckle.AspNetCore/6.1.5": {
         "type": "package",
         "dependencies": {
@@ -1770,6 +1783,33 @@
         "version.txt"
       ]
     },
+    "Newtonsoft.Json/13.0.1": {
+      "sha512": "ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
+      "type": "package",
+      "path": "newtonsoft.json/13.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "newtonsoft.json.13.0.1.nupkg.sha512",
+        "newtonsoft.json.nuspec",
+        "packageIcon.png"
+      ]
+    },
     "Swashbuckle.AspNetCore/6.1.5": {
       "sha512": "AFiomCan3c3twBr3q/0P0YECN+AtJEKASjtRybbKlFyqSyENrwj8Q3JmPQ7knyp7Z2TzbhZ+ZccA3eXpGcD97g==",
       "type": "package",
@@ -2429,6 +2469,7 @@
       "Microsoft.EntityFrameworkCore >= 6.0.0-preview.4.21253.1",
       "Microsoft.EntityFrameworkCore.Design >= 6.0.0-preview.4.21253.1",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.0-preview.4.21253.1",
+      "Newtonsoft.Json >= 13.0.1",
       "Swashbuckle.AspNetCore >= 6.1.5"
     ]
   },
@@ -2439,11 +2480,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\lion\\Desktop\\Tasinmaz\\dotnetWebApi\\dotnetWebApi.csproj",
+      "projectUniqueName": "C:\\Users\\lion\\Desktop\\Tasinmaz\\dotnetWebApi\\dotnetWebApi.csproj",
       "projectName": "dotnetWebApi",
-      "projectPath": "c:\\Users\\lion\\Desktop\\Tasinmaz\\dotnetWebApi\\dotnetWebApi.csproj",
+      "projectPath": "C:\\Users\\lion\\Desktop\\Tasinmaz\\dotnetWebApi\\dotnetWebApi.csproj",
       "packagesPath": "C:\\Users\\lion\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\lion\\Desktop\\Tasinmaz\\dotnetWebApi\\obj\\",
+      "outputPath": "C:\\Users\\lion\\Desktop\\Tasinmaz\\dotnetWebApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2498,6 +2539,10 @@
           "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",
             "version": "[6.0.0-preview.4.21253.1, )"
+          },
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[13.0.1, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

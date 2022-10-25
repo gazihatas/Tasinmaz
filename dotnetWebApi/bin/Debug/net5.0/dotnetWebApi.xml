@@ -39,5 +39,56 @@
             Kullanıcı Silme.
              </summary>
         </member>
+        <member name="P:Data.Entities.KadastroParselModel.Durum">
+            <summary>
+            2: Pasif
+            3: Aktif
+            </summary>
+        </member>
+        <member name="P:Data.Entities.KadastroParselModel.KatMulkiyetiDurum">
+            <summary>
+            0: Bilinmiyor
+            1: KMKuruldu
+            2: KMKurulmadi
+            </summary>
+        </member>
+        <member name="P:Data.Entities.KadastroParselModel.HazineParselDurum">
+            <summary>
+            0: Bilinmiyor
+            1: HazineParsel
+            2: HazineParselHisseli
+            3: HazineParselDegil
+            </summary>
+        </member>
+        <member name="P:Data.Entities.KadastroParselModel.IlPkId">
+            <summary>
+            İlin veritabanındaki id değeri
+            </summary>
+        </member>
+        <member name="P:Data.Entities.KadastroParselModel.IlTakbisId">
+            <summary>
+            İlin tapu id değeri
+            </summary>
+        </member>
+        <member name="P:Data.Entities.KadastroParselModel.IlcePkId">
+            <summary>
+            İlçenin veritabanındaki id değeri
+            </summary>
+        </member>
+        <member name="P:Data.Entities.KadastroParselModel.IlceTakbisId">
+            <summary>
+            İlçenin takbis id değeri
+            </summary>
+        </member>
+        <member name="P:Data.Entities.KadastroParselModel.MahallePkId">
+            <summary>
+            Mahallenin veritabanındaki id değeri
+            </summary>
+        </member>
+        <member name="P:Data.Entities.KadastroParselModel.MahalleTakbisId">
+            <summary>
+            Mahallenin takbis id değeri
+            </summary>
+        </member>
     </members>
 </doc>

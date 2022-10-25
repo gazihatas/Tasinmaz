@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Data.Entities;
 using dotnetWebApi.Enums;
 using dotnetWebApi.IServices;
 using dotnetWebApi.Models;
@@ -12,6 +14,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.BindingModel;
+using Newtonsoft.Json;
 
 namespace dotnetWebApi.Controllers
 {
@@ -19,6 +22,8 @@ namespace dotnetWebApi.Controllers
     [Route("api/[controller]")]
     public class ArsaController : ControllerBase
     {
+        private string url = "http://apps.odakgis.com.tr:8282/api/megsis/GetParselWithGeomWktAsync/";
+        HttpClientHandler _clientHandler = new HttpClientHandler();
         private readonly IArsaService _arsaService;
         public ArsaController(IArsaService arsaService)
         {
@@ -60,7 +65,7 @@ namespace dotnetWebApi.Controllers
 
         
         [HttpPost("AddUpdateTasinmaz")]
-        public async Task<object> AddUpdateArticle([FromBody] AddUpdateTasinmaz model)
+        public async Task<object> AddUpdateTasinmaz([FromBody] AddUpdateTasinmaz model)
         {
             try
             {
@@ -196,6 +201,14 @@ namespace dotnetWebApi.Controllers
             }
 
         }
+
+        [HttpGet("Cities")]
+        public async Task<Object> GetCities()
+        {
+            var cities = await _arsaService.GetAllSehir();
+            return Ok(cities);
+        }
+      
       
         [HttpGet("Ilceler/{id}")]
         public async Task<object> GetIlceler(int id)
@@ -211,6 +224,13 @@ namespace dotnetWebApi.Controllers
             {
                 return await Task.FromResult(new ResponseModel(ResponseCode.Error, ex.Message,null));
             }
+        }
+
+        [HttpGet("Districts/{id}")]
+        public async Task<object> GetDistricts(int id)
+        {
+            var districts = await _arsaService.GetAllIlce(id);
+            return Ok(districts);
         }
         
 
@@ -228,6 +248,31 @@ namespace dotnetWebApi.Controllers
             {
                 return await Task.FromResult(new ResponseModel(ResponseCode.Error, ex.Message,null));
             }
+        }
+
+         [HttpGet("Neighbourhood/{id}")]
+        public async Task<object> GetNeighbourhood(int id)
+        {
+            
+            var neighbourhood = await _arsaService.GetAllMahalle(id);
+            return Ok(neighbourhood);
+        }
+
+
+        public List<Object> list = new List<Object>();
+         [HttpGet("Parsel/{geomwkt}")]
+         public async Task<ActionResult<String>> GetParsel(string geomwkt){
+             List<KadastroParselModel> donus = null;
+            // DbGeography dbg = DbGeography.FromText(geomwkt);
+            using (var httpClient = new HttpClient(_clientHandler)){
+               var response = httpClient.GetAsync(url + geomwkt).Result;
+               if(response.StatusCode==System.Net.HttpStatusCode.OK){
+                
+                 donus = JsonConvert.DeserializeObject<List<KadastroParselModel>>(response.Content.ReadAsStringAsync().Result);
+               }
+            }
+            System.Console.WriteLine(list.ToArray());
+             return Ok(donus);
         }
 
 

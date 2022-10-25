@@ -55,6 +55,9 @@
                             style="width: 97px;">Id</th>
                           <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1"
                             colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending"
+                            style="width: 97px;">Tasinmaz Sahibi</th>
+                          <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1"
+                            colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending"
                             style="width: 97px;">İl</th>
                           <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1"
                           colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending"
@@ -84,6 +87,7 @@
                       <tbody>
                         <tr class="even" *ngFor="let tasinmaz of tasinmazList |  paginate: { itemsPerPage:10, currentPage: page}">
                           <td>{{tasinmaz.id}}</td>
+                          <td>{{user.fullName}}</td>
                           <td>{{tasinmaz.ilAdi}}</td>
                           <td>{{tasinmaz.ilceAdi}}</td>
                           <td>{{tasinmaz.mahalleAdi}}</td>

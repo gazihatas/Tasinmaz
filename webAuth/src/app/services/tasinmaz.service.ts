@@ -17,17 +17,17 @@ export class TasinmazService {
     private formBuilder:FormBuilder
     ) { }
 
-  tasinmazAddForm=this.formBuilder.group({
-      Cities: ['',Validators.required],
-      Districts: [{value:'',disabled:false}],
-      Neighbourhoods:[{value:'',disabled:false}],
-      Adres:[null,Validators.required],
-      Ada:[null,Validators.required],
-      Parsel:[null,Validators.required],
-      Nitelik:[null,Validators.required],
-      xCoordinatesParsel:[null,Validators.required],
-      yCoordinatesParsel:[null,Validators.required]
-    });
+  // tasinmazAddForm=this.formBuilder.group({
+  //     Cities: ['',Validators.required],
+  //     Districts: [{value:'',disabled:false}],
+  //     Neighbourhoods:[{value:'',disabled:false}],
+  //     Adres:[null,Validators.required],
+  //     Ada:[null,Validators.required],
+  //     Parsel:[null,Validators.required],
+  //     Nitelik:[null,Validators.required],
+  //     xCoordinatesParsel:[null,Validators.required],
+  //     yCoordinatesParsel:[null,Validators.required]
+  //   });
 
 
 
@@ -47,6 +47,25 @@ export class TasinmazService {
     return this.httpClient.post<ResponseModel>(Constants.BASE_URL + "Arsa/DeleteTasinmaz", body,{headers:headers});
   }
 
+  // BtnTasinmazEkle(){
+  //   if(this.formModel.value.Ada!=null){
+  //       var body={
+  //       ilId:this.formModel.value.Cities,
+  //       ilceId:this.formModel.value.Districts,
+  //       mahalleId:this.formModel.value.Neighbourhoods,
+  //       ada:this.formModel.value.Ada,
+  //       parsel:this.formModel.value.Parsel,
+  //       nitelik:this.formModel.value.Nitelik,
+  //       xCoordinate:this.formModel.value.xCoordinatesParsel.toString(),
+  //       yCoordinate:this.formModel.value.yCoordinatesParsel.toString()
+  //     };
+  //     console.log(body);
+  //     return this.http.post(this.BaseURI+'/Tasinmaz/Add',body);
+  //   }else{
+  //     this.toastr.error("Lütfen parsel yanındaki butona basıp bir koordinak seçin","Hata")
+  //   }
+  // }
+
   public addUpdateTasinmaz(
     tasinmazId: number,
     ilId:number,
@@ -65,6 +84,14 @@ export class TasinmazService {
       'Authorization': `Bearer ${userInfo?.token}`
     });
     const body = {
+      // ilId:this.tasinmazAddForm.value.Cities,
+      // ilceId:this.tasinmazAddForm.value.Districts,
+      // mahalleId:this.tasinmazAddForm.value.Neighbourhoods,
+      // ada:this.tasinmazAddForm.value.Ada,
+      // parsel:this.tasinmazAddForm.value.Parsel,
+      // nitelik:this.tasinmazAddForm.value.Nitelik,
+      // xCoordinate:this.tasinmazAddForm.value.xCoordinatesParsel.toString(),
+      // yCoordinate:this.tasinmazAddForm.value.yCoordinatesParsel.toString()
       Id: tasinmazId,
       IlId:ilId,
       IlceId:ilceId,
@@ -108,22 +135,14 @@ export class TasinmazService {
   }
 
   GetCities(){
-    return this.httpClient.get(Constants.BASE_URL+"Arsa/Sehirler").pipe( );
+    return this.httpClient.get(Constants.BASE_URL+"Arsa/Cities").pipe( );
   }
 
-  GetSingleCities(){
-    this.tasinmaz.forEach(function(value){
-      // this.service.getSingleCities( value.ilId).subscribe((result:any)=>{
-      //     return this.http.get(this.BaseURI+'/Tasinmaz/Cities/Single/'+result.ilName).subscribe((result:any)=>
-      //     {
-      //         this.citiName=result;
-      //     });
-      //   });
-    });
-  }
+
+
 
   GetDistricts(cityId:Number){
-    return this.httpClient.get(Constants.BASE_URL+"Arsa/Ilceler"+cityId).pipe( );
+    return this.httpClient.get(Constants.BASE_URL+"Arsa/Districts/"+cityId).pipe( );
   }
 
   GetSingleDistricts(distrtictId:Number){
@@ -131,10 +150,16 @@ export class TasinmazService {
   }
 
   GetNeighbourhood(districtsId:Number){
-    return this.httpClient.get(Constants.BASE_URL+'Arsa/Mahalleler/'+districtsId).pipe( );
+    return this.httpClient.get(Constants.BASE_URL+'Arsa/Neighbourhood/'+districtsId).pipe( );
   }
   GetSingleNeighbourhood(neighbourdId:Number){
 
+  }
+
+
+
+   GetParsel(wkt){
+    return this.httpClient.get(Constants.BASE_URL+ '/Tasinmaz/Parsel/'+ wkt).pipe();
   }
 
 

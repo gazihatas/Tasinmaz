@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2DTqZ1XsIcXYxgttdYMZ4CS1/V1QUtFHlVtkqeEtkavLbYG2t1oHvVB3LCtq1lT33g19iL8Etdzg9fbSUm8TTg==",
+  "dgSpecHash": "9JW4oVdVoQgXoFgu4DArtx52a5Jb9cleolZEgWw4hQNNSS5RKJb0evmSHFNxQQW3CHb9YJPolXwTYZUkLi5h4A==",
   "success": true,
   "projectFilePath": "C:\\Users\\lion\\Desktop\\Tasinmaz\\dotnetWebApi\\dotnetWebApi.csproj",
   "expectedPackageFiles": [
@@ -40,6 +40,7 @@
     "C:\\Users\\lion\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\lion\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\lion\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\lion\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\lion\\.nuget\\packages\\swashbuckle.aspnetcore\\6.1.5\\swashbuckle.aspnetcore.6.1.5.nupkg.sha512",
     "C:\\Users\\lion\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.1.5\\swashbuckle.aspnetcore.swagger.6.1.5.nupkg.sha512",
     "C:\\Users\\lion\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.1.5\\swashbuckle.aspnetcore.swaggergen.6.1.5.nupkg.sha512",

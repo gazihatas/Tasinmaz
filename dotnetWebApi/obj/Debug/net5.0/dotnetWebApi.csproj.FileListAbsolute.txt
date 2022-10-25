@@ -368,3 +368,4 @@ C:\Users\lion\Desktop\Tasinmaz\dotnetWebApi\obj\Debug\net5.0\dotnetWebApi.xml
 C:\Users\lion\Desktop\Tasinmaz\dotnetWebApi\obj\Debug\net5.0\dotnetWebApi.pdb
 C:\Users\lion\Desktop\Tasinmaz\dotnetWebApi\obj\Debug\net5.0\dotnetWebApi.genruntimeconfig.cache
 C:\Users\lion\Desktop\Tasinmaz\dotnetWebApi\obj\Debug\net5.0\ref\dotnetWebApi.dll
+C:\Users\lion\Desktop\Tasinmaz\dotnetWebApi\bin\Debug\net5.0\Newtonsoft.Json.dll
