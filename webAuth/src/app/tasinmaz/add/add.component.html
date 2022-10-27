@@ -25,22 +25,24 @@
       <div class="card shadow mb-4">
 
         <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Tasinmaz Ekle</h6>
+          <h4 class="m-0 font-weight-bold text-primary float-left">Tasinmaz Ekle</h4>
+          <h4 class="m-0 font-weight-bold text-warning float-end">Kordinat Seç</h4>
         </div>
+
 
 
 
       <!-- Card Body start-->
         <div class="card-body">
         <!--Row Start-->
-       <div class="row">
+       <div class="row" class="table-responsive">
         <!-- Form -->
-              <div class="col-lg-6">
+              <div class="col-lg-5">
                 <form [formGroup]="tasinmazAddForm" (ngSubmit)="onSubmit()">
 
                   <div class="form-group required">
                     <label> İl: </label>
-                    <select class="form-control" formControlName="Cities" style="padding-top:1px ;" (ngModelChange)="OnChangeCitiy($event)" required aria-label>
+                    <select class="form-control" formControlName="Cities" (ngModelChange)="OnChangeCitiy($event)" required aria-label>
                       <!-- <option value="">Select stae...</option> -->
                       <option value="">İl Seçin...</option>
                       <option *ngFor="let city of cities" [value]="city.ilId">{{city.ilName}} </option>
@@ -52,7 +54,7 @@
 
                   <div class="form-group required">
                     <label> İlçe: </label>
-                    <select   class="form-control"  formControlName="Districts" style="padding-top:1px ;"  (ngModelChange)="OnChangeDistricts($event)" required aria-label>
+                    <select   class="form-control"  formControlName="Districts" (ngModelChange)="OnChangeDistricts($event)" required aria-label>
                       <option value="">İlçe Seçin...</option>
                       <option *ngFor="let district of districts"  [value]="district.ilceid">{{district.ilcename}}</option>
                     </select>
@@ -61,7 +63,7 @@
 
                   <div class="form-group required">
                     <label> Mahalle: </label>
-                    <select  class="form-control"  formControlName="Neighbourhoods" style="padding-top:1px ;" required aria-label >
+                    <select  class="form-control"  formControlName="Neighbourhoods" required aria-label >
                       <option value="">Mahalle Seçin...</option>
                       <option *ngFor="let neighbourhood of neighbourhoods"  [value]="neighbourhood.mahalleId">{{neighbourhood.mahalleName}}</option>
                     </select>
@@ -81,22 +83,24 @@
                   <div class="form-group required">
                     <label> Parsel: </label>
                     <!-- <div data-toggle="modal" data-target="#mapModalParsel" style="width: 50px;margin-top: -5px;"  class="btn btn-block bg-danger text-light" ><i class="fas fa-map-marker-alt"style="font-size:25px;"></i></div> -->
-                    <input  placeholder="Parsel"class="form-control" style="margin-left:50px;margin-top: -40px;width: 195px;" formControlName="Parsel">
+                    <input  placeholder="Parsel"class="form-control"  formControlName="Parsel">
                   </div>
 
                   <div class="form-group required">
                     <label> Nitelik: </label>
-                    <input  class="form-control"formControlName="Nitelik">
+                    <input  class="form-control" formControlName="Nitelik">
                   </div>
 
-                  <div class="row-md mt-4 ml-4"style="margin:3% auto auto 25%!important;width:150px; ">
-                    <label style="margin-left: -20px;"> Koordinata Git: </label>
-                    <input id="xCoordinatesParsel" formControlName="xCoordinatesParsel" placeholder="X"class="form-control rounded-pill" style="margin-left:90px;margin-top: -38px;width: 100px;" >
-                    <input id="yCoordinatesParsel" formControlName="yCoordinatesParsel" placeholder="Y"class="form-control rounded-pill" style="margin-left: 188px;margin-top: -38px;width: 100px;" >
-                </div>
 
-                <div class="form-group col-md-8">
-                  <button class="btn btn-lg btn-block bg-success text-light rounded-pill" [disabled]="tasinmazAddForm.invalid">Taşınmaz Ekle</button>
+                  <div class="form-group">
+                    <label for="">Kordinat</label>
+                      <input  id="xCoordinatesParsel" formControlName="xCoordinatesParsel" placeholder="X"class="form-control" >
+                      <input  id="yCoordinatesParsel" formControlName="yCoordinatesParsel" placeholder="Y"class="form-control" >
+                  </div>
+
+
+                <div class="form-group">
+                  <button class="btn btn-lg btn-block bg-success text-light" [disabled]="tasinmazAddForm.invalid">Tasinmaz Ekle</button>
                 </div>
 
                 </form>
@@ -104,16 +108,16 @@
         <!--Form Finish-->
 
 
-
               <!-- Harita Kısmı-->
-              <div class="col-lg-6">
-                <h5>Koordinat almak istediğiniz yere tıklayın</h5>
-                <div (click)="getCoord($event)" id="map"  class="map" style="width: 100%; height: 100%;">
+              <div class="col-lg-7">
+
+                <h5  class="text-center fw-bold">Koordinat almak istediğiniz yere tıklayın</h5>
+                <div (click)="getCoord($event)" id="map"  class="map" style="width: 100%; height: 90%;">
                   <!-- <div (click)="getCoord($event)" id="ol-map" class="map-container">
 
                   </div> -->
-                </div>
 
+                </div>
 
                   <!-- <div class="" style="display: contents"></div>
                   <div (click)="getCoord($event)" id="ol-map" class="map-container">

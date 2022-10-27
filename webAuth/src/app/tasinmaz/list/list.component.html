@@ -23,7 +23,8 @@
 
         <div class="card shadow mb-4">
           <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Tasinmaz Tablosu</h6>
+            <h6 class="m-0 font-weight-bold text-primary float-left">Tasinmaz Tablosu</h6>
+            <button  class="btn btn-success float-end"  (click)="Exportexcel()"><i class="fas fa-file-excel pl-2" ></i> Excell Report</button>
           </div>
 
           <!-- <div class="alert alert-warning" role="alert"  *ngIf="userList<1">
@@ -46,7 +47,7 @@
                 </div> -->
                 <div class="row">
                   <div class="col-sm-12">
-                    <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0"
+                    <table class="table table-bordered " width="100%" cellspacing="0" id="excel-table"
                       role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                       <thead>
                         <tr role="row">

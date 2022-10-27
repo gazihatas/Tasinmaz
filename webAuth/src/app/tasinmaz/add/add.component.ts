@@ -14,6 +14,7 @@ import View from "ol/View";
 import Tile from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
 import ControlScaleLine from "ol/control/ScaleLine";
+
 //import Map from 'ol/Map';
 import WKT from 'ol/format/WKT';
 //import View from 'ol/View';
@@ -41,7 +42,11 @@ import {Circle as CircleStyle} from 'ol/style';
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss']
 })
+
+
+
 export class AddComponent implements OnInit {
+
 
   public tasinmazList:Tasinmaz[] = [];
   public cities: Cities[]=[];

@@ -1,11 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import { ResponseCode } from '../enums/responseCode';
 import { Constants } from '../Helper/constants';
 import { ResponseModel } from '../Models/responseModel';
 import { Tasinmaz } from '../Models/tasinmaz';
+import BingMaps from 'ol/source/BingMaps';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,8 @@ export class TasinmazService {
   tasinmaz:[];
   constructor(
     private httpClient:HttpClient,
-    private formBuilder:FormBuilder
+    private formBuilder:FormBuilder,
+    private toastr: ToastrService,
     ) { }
 
     deger:string;
