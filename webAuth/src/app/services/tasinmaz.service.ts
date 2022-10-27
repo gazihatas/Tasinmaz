@@ -17,6 +17,9 @@ export class TasinmazService {
     private formBuilder:FormBuilder
     ) { }
 
+    deger:string;
+    boslukKontrolHataMessage='Bu alan zorunludur.';
+
   // tasinmazAddForm=this.formBuilder.group({
   //     Cities: ['',Validators.required],
   //     Districts: [{value:'',disabled:false}],

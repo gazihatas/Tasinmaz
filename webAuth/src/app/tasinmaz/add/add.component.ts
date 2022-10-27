@@ -1,34 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ResponseCode } from 'src/app/enums/responseCode';
 import { Constants } from 'src/app/Helper/constants';
 import { Tasinmaz } from 'src/app/Models/tasinmaz';
 import { User } from 'src/app/Models/user';
+import { Cities } from 'src/app/Models/cities';
 import { TasinmazService } from 'src/app/services/tasinmaz.service';
+import { Districts } from 'src/app/Models/districts';
+import { Neighbourhoods } from 'src/app/Models/neighbourhoods';
+import Map from "ol/Map";
+import View from "ol/View";
+import Tile from "ol/layer/Tile";
+import OSM from "ol/source/OSM";
+import ControlScaleLine from "ol/control/ScaleLine";
+//import Map from 'ol/Map';
+import WKT from 'ol/format/WKT';
+//import View from 'ol/View';
+import Stroke from 'ol/style/Stroke';
+import Style from 'ol/style/Style';
+import Fill from 'ol/style/Fill';
+import Text from 'ol/style/Text';
 
-// import Map from 'ol/Map';
-// import WKT from 'ol/format/WKT';
-// import View from 'ol/View';
-// import Stroke from 'ol/style/Stroke';
-// import Style from 'ol/style/Style';
-// import Fill from 'ol/style/Fill';
-// import Text from 'ol/style/Text';
 
-
-// import Tile from 'ol/layer/Tile';
-// import Vector from 'ol/source/Vector';
-// import OSM from 'ol/source/OSM';
-// import XYZ from 'ol/source/XYZ';
-// import Point from 'ol/geom/Point';
-// import MultiPoint from 'ol/geom/MultiPoint';
-// import Feature from 'ol/Feature';
-// import Polygon from 'ol/geom/Polygon';
-// import {fromLonLat, transform}from 'ol/proj.js'
-// import VectorLayer from 'ol/layer/Vector';
-// import VectorSource from 'ol/source/Vector';
-// import MultiPolygon from 'ol/geom/MultiPolygon';
-// import {Circle as CircleStyle} from 'ol/style';
+//import Tile from 'ol/layer/Tile';
+import Vector from 'ol/source/Vector';
+//import OSM from 'ol/source/OSM';
+import XYZ from 'ol/source/XYZ';
+import Point from 'ol/geom/Point';
+import MultiPoint from 'ol/geom/MultiPoint';
+import Feature from 'ol/Feature';
+import Polygon from 'ol/geom/Polygon';
+import {fromLonLat, transform}from 'ol/proj.js'
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import MultiPolygon from 'ol/geom/MultiPolygon';
+import {Circle as CircleStyle} from 'ol/style';
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
@@ -37,9 +44,9 @@ import { TasinmazService } from 'src/app/services/tasinmaz.service';
 export class AddComponent implements OnInit {
 
   public tasinmazList:Tasinmaz[] = [];
-  public cities: {};
-  public districts: {};
-  public neighbourhoods :{};
+  public cities: Cities[]=[];
+  public districts: Districts[]= [];
+  public neighbourhoods: Neighbourhoods[]=[];
   public adres:string='';
   // public map:Map;
   // public mapParsel:Map;
@@ -49,20 +56,40 @@ export class AddComponent implements OnInit {
   public xCoordinateParsel:number;
   public yCoordinateParsel:number;
   public tasinmazId:number=0;
+  control: ControlScaleLine;
+  map: Map;
+  view: View;
+  deger:string;
+  boslukKontrolHataMessage='Bu alan zorunludur.';
+  scaleType = "scaleline";
+  scaleBarSteps = 4;
+  scaleBarText = true;
 
   constructor(
     private formBuilder:FormBuilder,
     private tasinmazService:TasinmazService,
-    private toastr:ToastrService
+    private toastr:ToastrService,
+    private elementRef: ElementRef
     ) { }
   public tasinmazAddForm;
 
   ngOnInit()
   {
+    this.initilizeMap();
+    // getAllTasinmaz()
+    // {
+    //   this.tasinmazService.getTasinmazsByAuthorId(this.user.userId).subscribe((data:Tasinmaz[]) => {
+    //     this.tasinmazList=data;
+    //   })
+
+    // }
     console.log("sehirList")
-    this.tasinmazService.GetCities().subscribe(
-      data => this.cities=data
-    );
+    this.tasinmazService.GetCities().subscribe((data:Cities[])=>{
+      this.cities=data;
+    })
+    // this.tasinmazService.GetCities().subscribe(
+    //   data:this.cities=data
+    // );
 
       this.tasinmazAddForm=this.formBuilder.group({
         Cities: ['',Validators.required],
@@ -267,20 +294,78 @@ export class AddComponent implements OnInit {
 
 //     return true;
 //    }
+initilizeMap() {
+  this.map = new Map({
+    // controls: defaultControls().extend([this.scaleControl()]),
+    target: "map",
+    layers: [new Tile({ source: new OSM() })],
+    view: new View({
+      center: [3800000.0, 4700000.0],
+      zoom: 6.5,
+      minZoom: 5.8,
+    }),
+  });
+  this.control = new ControlScaleLine({
+    target: this.elementRef.nativeElement,
+  });
+  this.map.addControl(this.control);
+}
+getCoord(event) {
+  var coordinate = this.map.getEventCoordinate(event);
+  this.xCoordinate = coordinate[1];
+  this.yCoordinate = coordinate[0];
+  console.log(coordinate);
+  console.log(this.xCoordinate);
+  console.log(this.yCoordinate);
+  this.tasinmazAddForm.controls["xCoordinatesParsel"].setValue(
+    this.xCoordinate.toString()
+  );
+  this.tasinmazAddForm.controls["yCoordinatesParsel"].setValue(
+    this.yCoordinate.toString()
+  );
+  // document.getElementById("closeModalButton").click();
+  //this.closeModal.nativeElement.click();
 
-
+  // ref.click();
+}
 
 
   OnChangeCitiy(citiyId: Number){
+    // if (provinceID) {
+    //   console.log(provinceID);
+    //   this.countryService.getCountryById(provinceID).subscribe((data) => {
+    //     console.log(data);
+    //     this.tasinmazAddForm.controls.countryID.enable();
+    //     this.country = data.data;
+    //     this.nb = null;
+    //   });
+    // } else {
+    //   console.log(provinceID);
+
+    //   this.tasinmazAddForm.controls.countryID.disable();
+    //   this.tasinmazAddForm.controls.nbID.disable();
+    //   this.country = null;
+    //   this.nb = null;
+    // }
+
+
+
+
     console.log("cityid "+citiyId)
     if(citiyId){
-      this.tasinmazService.GetDistricts(citiyId).subscribe(
-          data => {
-            this.tasinmazAddForm.controls.Districts.enable();
-            this.districts = data;
-            this.neighbourhoods = null;
-          }
-     );
+    //   this.tasinmazService.GetDistricts(citiyId).subscribe(
+    //       data => {
+    //         this.tasinmazAddForm.controls.Districts.enable();
+    //         this.districts = data;
+    //         this.neighbourhoods = null;
+    //       }
+    //  );
+      this.tasinmazService.GetDistricts(citiyId).subscribe((data:Districts[])=> {
+        this.tasinmazAddForm.controls.Districts.enable();
+        this.districts=data;
+        this.neighbourhoods = null;
+      })
+
     //  this.tasinmazService.GetDistricts(citiyId).subscribe(
     //   data => this.districts=data
     // );
@@ -294,12 +379,16 @@ export class AddComponent implements OnInit {
 
  OnChangeDistricts(cityId: Number){
   if(cityId){
-    this.tasinmazService.GetNeighbourhood(cityId).subscribe(
-        data => {
-          this.tasinmazAddForm.controls.Neighbourhoods.enable();
-          this.neighbourhoods = data;
-        }
-    );
+    // this.tasinmazService.GetNeighbourhood(cityId).subscribe(
+    //     data => {
+    //       this.tasinmazAddForm.controls.Neighbourhoods.enable();
+    //       this.neighbourhoods = data;
+    //     }
+    // );
+    this.tasinmazService.GetNeighbourhood(cityId).subscribe((data:Neighbourhoods[])=> {
+      this.tasinmazAddForm.controls.Neighbourhoods.enable();
+      this.neighbourhoods=data;
+    })
   }else{
     this.tasinmazAddForm.controls.Neighbourhoods.disable();
     this.neighbourhoods=null;
