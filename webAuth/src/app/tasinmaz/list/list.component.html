@@ -47,19 +47,19 @@
                 </div> -->
                 <div class="row">
                   <div class="col-sm-12">
-                    <table class="table table-bordered " width="100%" cellspacing="0" id="excel-table"
+                    <table class="table table-bordered " width="100%" heigth="70%" cellspacing="0" id="excel-table"
                       role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                       <thead>
                         <tr role="row">
                           <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1"
                             colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending"
-                            style="width: 97px;">Id</th>
+                            style="width: 20px;">Id</th>
                           <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1"
                             colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending"
-                            style="width: 97px;">Tasinmaz Sahibi</th>
+                            style="width: 30px;">Malik</th>
                           <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1"
                             colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending"
-                            style="width: 97px;">İl</th>
+                            style="width: 40px;">İl</th>
                           <th class="sorting sorting_desc" tabindex="0" aria-controls="dataTable" rowspan="1"
                           colspan="1" aria-label="Name: activate to sort column ascending" aria-sort="descending"
                           style="width: 97px;">İlçe</th>
@@ -86,18 +86,20 @@
                       </thead>
 
                       <tbody>
-                        <tr class="even" *ngFor="let tasinmaz of tasinmazList |  paginate: { itemsPerPage:10, currentPage: page}">
+                        <tr class="even" *ngFor="let tasinmaz of tasinmazList |  paginate: { itemsPerPage:6, currentPage: page}">
                           <td>{{tasinmaz.id}}</td>
                           <td>{{user.fullName}}</td>
                           <td>{{tasinmaz.ilAdi}}</td>
                           <td>{{tasinmaz.ilceAdi}}</td>
                           <td>{{tasinmaz.mahalleAdi}}</td>
-                          <td>{{tasinmaz.adres}}</td>
+                          <td>{{tasinmaz.adres | truncate:[10,'...']}}</td>
                           <td>{{tasinmaz.parsel}}</td>
                           <td>{{tasinmaz.ada}}</td>
                           <td>{{tasinmaz.nitelik}}</td>
                           <td>
-                            <button type="button" class="btn btn-warning btn-sm">Kordinata Git</button>
+                            <button type="button" class="btn btn-warning btn-sm">Git</button>
+                            <button (click)="onDelete(tasinmaz.id)" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
+
                           </td>
 
                         </tr>

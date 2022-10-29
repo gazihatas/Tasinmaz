@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { ResponseCode } from 'src/app/enums/responseCode';
 import { Constants } from 'src/app/Helper/constants';
 import { Tasinmaz } from 'src/app/Models/tasinmaz';
 import { User } from 'src/app/Models/user';
@@ -12,7 +14,9 @@ import * as XLSX from 'xlsx';
 })
 export class ListComponent implements OnInit {
 
-  constructor(private tasinmazService:TasinmazService) { }
+  constructor(
+    private tasinmazService:TasinmazService,
+    private toastr: ToastrService) { }
   fileName = 'TasinmazKayitTablosu.xlsx';
   public tasinmazList:Tasinmaz[] = [];
   totalLength:any;
@@ -51,5 +55,33 @@ export class ListComponent implements OnInit {
 
     XLSX.writeFile(wb, this.fileName);
   }
+
+
+  onDelete(tasinmazId:number)
+  {
+    console.log("on Delete");
+
+    this.tasinmazService.deleteTasinmaz(tasinmazId).subscribe((res)=>{
+      if(res)
+      {
+        //console.log("Silme durumunu onayla: Evet");
+        //this.tasinmazService.deleteTasinmaz(tasinmazId).subscribe((res)=>{
+
+          if(res.responseCode==ResponseCode.OK)
+          {
+            this.toastr.success("İçerik başarıyla silindi.");
+            this.getAllTasinmaz();
+          } else{
+            this.toastr.error("Birşeyler ters gitti, lütfen tekrar deneyin.");
+          }
+      }
+
+    },()=>{
+      this.toastr.error("AAABirşeyler ters gitti, lütfen tekrar deneyin.");
+    })
+
+  }
+
+
 
 }
