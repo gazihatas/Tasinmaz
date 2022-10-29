@@ -1,1 +1,168 @@
-<p>update works!</p>
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.9.0/css/ol.css"
+    type="text/css"
+  />
+  <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.9.0/build/ol.js"></script>
+
+  <div id="wrapper">
+
+  <!-- Sol Navbar-->
+  <app-navbar></app-navbar>
+
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+      <!-- Ust Navbar -->
+      <app-ust-navbar></app-ust-navbar>
+
+
+      <!-- Card Shadow Start-->
+      <div class="card shadow mb-4">
+
+        <div class="card-header py-3">
+          <h4 class="m-0 font-weight-bold text-primary float-left">Tasinmaz Güncelle</h4>
+          <h4 class="m-0 font-weight-bold text-warning float-end">Kordinat Güncelle</h4>
+        </div>
+
+
+
+
+      <!-- Card Body start-->
+        <div class="card-body">
+        <!--Row Start-->
+       <div class="row">
+        <!-- Form -->
+              <div class="col-lg-5">
+                <form [formGroup]="tasinmazUpdateForm" (ngSubmit)="onSubmit()">
+
+                  <div class="form-group required">
+                    <label> İl: </label>
+                    <select class="form-control" formControlName="Cities" (ngModelChange)="OnChangeCitiy($event)" required aria-label>
+                      <!-- <option value="">Select stae...</option> -->
+                      <option value="">İl Seçin...</option>
+                      <option *ngFor="let city of cities" [value]="city.ilId">{{city.ilName}} </option>
+                    </select>
+
+                    <label class="hata-lbl-kullanici text-danger" *ngIf="tasinmazUpdateForm.get('Cities').touched && tasinmazUpdateForm.get('Cities').invalid">{{boslukKontrolHataMessage}}</label>
+                    <label class="hata-lbl-kullanici text-danger" *ngIf="tasinmazUpdateForm.get('Cities').touched && tasinmazUpdateForm.get('Cities').required">{{boslukKontrolHataMessage}}</label>
+                  </div>
+
+                  <div class="form-group required">
+                    <label> İlçe: </label>
+                    <select   class="form-control"  formControlName="Districts" (ngModelChange)="OnChangeDistricts($event)" required aria-label>
+                      <option value="">İlçe Seçin...</option>
+                      <option *ngFor="let district of districts"  [value]="district.ilceid">{{district.ilcename}}</option>
+                    </select>
+                    <label class="hata-lbl-kullanici text-danger" *ngIf="tasinmazUpdateForm.get('Districts').touched && tasinmazUpdateForm.get('Districts').invalid">{{boslukKontrolHataMessage}}</label>
+                  </div>
+
+                  <div class="form-group required">
+                    <label> Mahalle: </label>
+                    <select  class="form-control"  formControlName="Neighbourhoods" required aria-label >
+                      <option value="">Mahalle Seçin...</option>
+                      <option *ngFor="let neighbourhood of neighbourhoods"  [value]="neighbourhood.mahalleId">{{neighbourhood.mahalleName}}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group required">
+                    <label> Adres: </label>
+                    <input  type="text" placeholder="Adresinizi girin." class="form-control" formControlName="Adres">
+                  </div>
+
+
+                  <div class="form-group required">
+                    <label> Ada: </label>
+                    <input  type="number" placeholder="ADA" class="form-control" formControlName="Ada">
+                  </div>
+
+                  <div class="form-group required">
+                    <label> Parsel: </label>
+                    <!-- <div data-toggle="modal" data-target="#mapModalParsel" style="width: 50px;margin-top: -5px;"  class="btn btn-block bg-danger text-light" ><i class="fas fa-map-marker-alt"style="font-size:25px;"></i></div> -->
+                    <input  placeholder="Parsel"class="form-control"  formControlName="Parsel">
+                  </div>
+
+                  <div class="form-group required">
+                    <label> Nitelik: </label>
+                    <input  class="form-control" formControlName="Nitelik">
+                  </div>
+
+
+                  <div class="form-group">
+                    <label for="">Kordinat</label>
+                      <input  id="xCoordinatesParsel" formControlName="xCoordinatesParsel" placeholder="X"class="form-control" >
+                      <input  id="yCoordinatesParsel" formControlName="yCoordinatesParsel" placeholder="Y"class="form-control" >
+                  </div>
+
+
+                <div class="form-group">
+                  <button class="btn btn-lg btn-block bg-success text-light" [disabled]="tasinmazUpdateForm.invalid">Tasinmaz Ekle</button>
+                </div>
+
+                </form>
+              </div>
+        <!--Form Finish-->
+
+
+              <!-- Harita Kısmı-->
+              <div class="col-lg-7">
+
+                <h5  class="text-center fw-bold">Koordinat almak istediğiniz yere tıklayın</h5>
+                <div (click)="getCoord($event)" id="map"  class="map" style="width: 100%; height: 60%;">
+                  <!-- <div (click)="getCoord($event)" id="ol-map" class="map-container">
+
+                  </div> -->
+
+                </div>
+
+                  <!-- <div class="" style="display: contents"></div>
+                  <div (click)="getCoord($event)" id="ol-map" class="map-container">
+                    <div id="map" class="map"></div>
+                  </div> -->
+
+              </div>
+              <!-- Harita Finish-->
+
+              <script type="text/javascript">
+                var map = new ol.Map({
+                  target: "map",
+                  layers: [
+                    new ol.layer.Tile({
+                      source: new ol.source.OSM(),
+                    }),
+                  ],
+                  view: new ol.View({
+                    center: ol.proj.fromLonLat([37.41, 8.82]),
+                    zoom: 4,
+                  }),
+                });
+              </script>
+
+        </div>
+        <!--  Row finish -->
+       </div>
+       <!-- Card Body Finish-->
+
+
+
+
+        </div>
+        <!-- Card Shadow Finish-->
+
+
+
+      </div>
+    <!--Content Finish-->
+
+
+    </div>
+    <!-- End of Main Content -->
+
+
+  </div>
+  <!-- End of Content Wrapper -->
+

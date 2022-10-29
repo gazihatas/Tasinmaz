@@ -46,9 +46,9 @@ const routes: Routes = [
   {
     path:"tasinmaz",component:TasinmazComponent,
       children:[
+        {path:'update/:id',component:UpdateComponent},
         {path:'add',component:AddComponent},
-        {path:'list',component:ListComponent},
-        {path:'update',component:UpdateComponent}
+        {path:'list',component:ListComponent}
       ]
   }
 

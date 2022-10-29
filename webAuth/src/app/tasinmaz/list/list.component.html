@@ -24,7 +24,9 @@
         <div class="card shadow mb-4">
           <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary float-left">Tasinmaz Tablosu</h6>
+
             <button  class="btn btn-success float-end"  (click)="Exportexcel()"><i class="fas fa-file-excel pl-2" ></i> Excell Report</button>
+            <button  class="btn btn-info float-right" routerLink="/tasinmaz/add"><i class="fas fa-user pl-2" ></i> Yeni Tasinmaz Ekle</button>
           </div>
 
           <!-- <div class="alert alert-warning" role="alert"  *ngIf="userList<1">
@@ -97,7 +99,7 @@
                           <td>{{tasinmaz.ada}}</td>
                           <td>{{tasinmaz.nitelik}}</td>
                           <td>
-                            <button type="button" class="btn btn-warning btn-sm">Git</button>
+                            <button type="button"  routerLink="/tasinmaz/update/{{tasinmaz.id}}" class="btn btn-warning btn-sm">Git</button>
                             <button (click)="onDelete(tasinmaz.id)" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
 
                           </td>

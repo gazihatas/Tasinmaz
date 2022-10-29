@@ -26,13 +26,13 @@ import { ArticleDetailComponent } from './public-feature-module/article-detail/a
 import { TasinmazComponent } from './tasinmaz/tasinmaz.component';
 import { AddComponent } from './tasinmaz/add/add.component';
 import { ListComponent } from './tasinmaz/list/list.component';
-import { UpdateComponent } from './tasinmaz/update/update.component';
 import { LogComponent } from './log/log.component';
 import { HeaderComponent } from './layout/admin-layout/header/header.component';
 import { FooterComponent } from './layout/admin-layout/footer/footer.component';
 import { NavbarComponent } from './layout/admin-layout/navbar/navbar.component';
 import { UstNavbarComponent } from './layout/admin-layout/ust-navbar/ust-navbar.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { UpdateComponent } from './tasinmaz/update/update.component';
 
 @NgModule({
   declarations: [

@@ -433,18 +433,6 @@ onSubmit()
 }
 
 
-OnSubmit(){
-  // this.tasinmazService.addUpdateTasinmaz.subscribe(
-  //   (res: any)=>{
-  //       this.service.formModel.reset()
-  //       this.toastr.success('Yeni Taşınmaz başarılı bir şekilde oluşturuldu!','Kayıt Başarılı.'),
-  //       this.service.formModel.controls.Districts.disable(),
-  //       this.service.formModel.controls.Neighbourhoods.disable(),
-  //       this.neighbourhoods=null,this.districts=null
-  //       this.router.navigate(['/tasinmazhome/listtasinmaz']);
-
-  //     });
-}
 
 
   get user():User{
