@@ -42,10 +42,10 @@
 
                   <div class="form-group required">
                     <label> İl: </label>
-                    <select class="form-control" formControlName="Cities" (ngModelChange)="OnChangeCitiy($event)" required aria-label>
+                    <select class="form-control" formControlName="Cities"  (ngModelChange)="OnChangeCitiy($event)" required aria-label>
                       <!-- <option value="">Select stae...</option> -->
                       <option value="">İl Seçin...</option>
-                      <option *ngFor="let city of cities" [value]="city.ilId">{{city.ilName}} </option>
+                      <option *ngFor="let city of cities" [value]="city.ilId" >{{city.ilName}} </option>
                     </select>
 
                     <label class="hata-lbl-kullanici text-danger" *ngIf="tasinmazUpdateForm.get('Cities').touched && tasinmazUpdateForm.get('Cities').invalid">{{boslukKontrolHataMessage}}</label>

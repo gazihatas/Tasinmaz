@@ -37,6 +37,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ResponseCode } from 'src/app/enums/responseCode';
 import { Constants } from 'src/app/Helper/constants';
 import { User } from 'src/app/Models/user';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-update',
@@ -48,7 +49,10 @@ export class UpdateComponent implements OnInit {
   constructor( private formBuilder:FormBuilder,
     private tasinmazService:TasinmazService,
     private toastr:ToastrService,
-    private elementRef: ElementRef) { }
+    private elementRef: ElementRef,
+    private router: ActivatedRoute) { }
+
+
   public tasinmazList:Tasinmaz[] = [];
   public cities: Cities[]=[];
   public districts: Districts[]= [];
@@ -74,6 +78,7 @@ export class UpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.initilizeMap();
+    console.log("tasinmaz id=> ",this.router.snapshot.params.id)
     // getAllTasinmaz()
     // {
     //   this.tasinmazService.getTasinmazsByAuthorId(this.user.userId).subscribe((data:Tasinmaz[]) => {
@@ -217,10 +222,10 @@ export class UpdateComponent implements OnInit {
     let xCoordinate = this.tasinmazUpdateForm.value.xCoordinatesParsel.toString();
     let yCoordinate=this.tasinmazUpdateForm.value.yCoordinatesParsel.toString();
 
-    this.tasinmazService.addUpdateTasinmaz(this.tasinmazId,ilId,ilceId,mahalleId,adres,ada,parsel,nitelik,xCoordinate,yCoordinate,this.user.userId).subscribe((res)=>{
+    this.tasinmazService.addUpdateTasinmaz(this.router.snapshot.params.id,ilId,ilceId,mahalleId,adres,ada,parsel,nitelik,xCoordinate,yCoordinate,this.user.userId).subscribe((res)=>{
       if(res.responseCode==ResponseCode.OK)
       {
-        if(this.tasinmazId>0)
+        if(this.router.snapshot.params.id>0)
         {
           this.toastr.success("Tasinmaz bilgileri başarıyla güncellendi.");
         }else {
