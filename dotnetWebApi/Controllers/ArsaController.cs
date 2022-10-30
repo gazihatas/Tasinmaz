@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Data.Entities;
+using dotnetWebApi.Data;
 using dotnetWebApi.Enums;
 using dotnetWebApi.IServices;
 using dotnetWebApi.Models;
@@ -25,9 +26,13 @@ namespace dotnetWebApi.Controllers
         private string url = "http://apps.odakgis.com.tr:8282/api/megsis/GetParselWithGeomWktAsync/";
         HttpClientHandler _clientHandler = new HttpClientHandler();
         private readonly IArsaService _arsaService;
-        public ArsaController(IArsaService arsaService)
+        private readonly AppDBContext _context;
+        private readonly ILoggerService _logger;
+        public ArsaController(IArsaService arsaService, ILoggerService logger, AppDBContext context)
         {
             _arsaService = arsaService;
+            _logger = logger;
+            _context = context;
         }
 
 
@@ -60,10 +65,10 @@ namespace dotnetWebApi.Controllers
         //     {
         //         return await Task.FromResult(new ResponseModel(ResponseCode.Error, ex.Message,null));
         //     }
-           
+
         // }
 
-        
+
         [HttpPost("AddUpdateTasinmaz")]
         public async Task<object> AddUpdateTasinmaz([FromBody] AddUpdateTasinmaz model)
         {
@@ -90,6 +95,7 @@ namespace dotnetWebApi.Controllers
                                                                 );
 
                 return await Task.FromResult(new ResponseModel(ResponseCode.OK,(model.id >0?"Kayıt Edilen Güncelleme":"Yeni kayıt eklendi"),result));
+
             }
             catch (Exception ex)
             {
@@ -111,6 +117,17 @@ namespace dotnetWebApi.Controllers
                 }
 
                 var result=await _arsaService.DeleteTasinmaz(model.Id);
+                var user = await _context.Kullanicilar.FindAsync(x => x.);
+                await _logger.Add(
+                      new Log{
+                          UserId= userId,
+                          Durum="Başarılı",
+                          Aciklama ="Taşınmaz Silme Başarılı bir şekilde gerçekleşti",
+                          IslemTipi="Taşınmaz Silme",
+                          DateTime= DateTime.Now.ToString("yyyy-MM-dd h:mm:ss tt"),
+                          UserIp = HttpContext.Connection.RemoteIpAddress?.ToString(),
+                        }
+                  );    
 
                 return await Task.FromResult(new ResponseModel(ResponseCode.OK,"Kayıt silindi.",result));
             }
